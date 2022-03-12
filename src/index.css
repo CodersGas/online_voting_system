@@ -1,13 +1,84 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+    sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td { 
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+}
+html,body, #root {
+  margin:0;
+  padding:0;
+  height: 100%;
+  width: 100%;
+}
+.loginFormContainerDiv {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+}
+.loginButton {
+  box-shadow: 
+    0.2em 0.2em 0 0 #19bc8b,
+    inset 0.2em 0.2em 0 0 #19bc8b !important;
+  background: none;
+  border: 1px solid !important;
+  font: inherit !important;
+  font-size: 1rem !important;
+  line-height: 1 !important;
+  padding: 1em 2em !important;
+  color: #19bc8b !important;
+  font-weight: 500;
+}
+.loginButton:hover,
+.loginButton:focus {
+  box-shadow: 
+      0 0 0 0 #2196f3,
+      inset 6em 3.5em 0 0 #2196f3 !important;
+  color: #fff !important;
+}
+.formLabel {
+  font-weight: 600;
+  margin-bottom: 0.5rem !important;
+}
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
+.bootstrapContainer {
+  margin: 0 auto;
+  height: 100%;
+  padding: 0 1rem;
+}
+@media only screen and (min-width: 768px) {
+  .bootstrapContainer {
+    width: 750px;
+  }
+}
+@media only screen and (min-width: 992px) {
+  .bootstrapContainer {
+    width: 970px;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .bootstrapContainer {
+    width: 1170px;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .bootstrapContainer {
+    width: 100%;
+    margin: 0;
+  }
+}
+@media only screen and (max-width: 280px) {
+  .bootstrapContainer {
+    width: 100%;
+    margin: 0;
+  }
 }

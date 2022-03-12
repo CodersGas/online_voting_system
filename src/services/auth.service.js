@@ -1,0 +1,21 @@
+import { callAPI } from "./apiCaller";
+import { baseUrl } from "../constants/common.constants";
+ 
+let data = null;
+
+export const AUTH_SERVICE = {
+  "login": async(params) => {
+    const configObj = {
+      "method": "POST",
+      "url":  `${baseUrl}/`,
+      "data": params,
+      "headers": {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      }
+    };
+
+    data = await callAPI(configObj);
+    return data;
+  }
+};

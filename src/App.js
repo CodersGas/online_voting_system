@@ -1,24 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter } from "react-router-dom";
+import ErrorBoundary from "./components/ErrorBounday";
+import Pages from "./pages";
+import { StateProvider, store } from "./store";
+import { createTheme, ThemeProvider } from "@mui/material";
+
+const THEME = createTheme({
+  typography: {
+    "fontFamily": `"Nunito", "Roboto", "Helvetica", "Arial", sans-serif`,
+    "fontWeightLight": 500
+  }
+});
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter basename={process.env.PUBLIC_URL} >
+      <ErrorBoundary>
+        <ThemeProvider theme={THEME} >
+          <StateProvider store={store} >
+            <Pages />
+          </StateProvider>
+        </ThemeProvider>
+      </ErrorBoundary>
+    </BrowserRouter>
   );
 }
 
