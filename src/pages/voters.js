@@ -7,12 +7,11 @@ import TableComponent from "../components/table";
 import { COMMON_SERVICE } from "../services/common.services";
 import { setVotersData } from "../store/actions";
 
-const voterHeader = ["S.no", "Name", "Email", "DoB", "Phone", "Actions"];
+const voterHeader = ["S.no", "Name", "Email", "Phone", "Actions"];
 
 const dummyVoter = [
   {
     "name": 'Ashish',
-    "dob": "27 Sept, 1997",
     "phone": "9958750734",
     "email": "abc@gmail.com"
   }

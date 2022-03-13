@@ -54,9 +54,11 @@ a {
   border: 6px solid #fff;
   border-radius: 1rem;
 }
-.loginFormContainerDiv form .MuiFormHelperText-root.Mui-error {
+.loginFormContainerDiv form .MuiFormHelperText-root.Mui-error,
+.loginFormContainerDiv form .MuiOutlinedInput-input.MuiInputBase-input {
   color: #fff !important;
   font-size: 1rem !important;
+  font-weight: 600 !important;
 }
 .loginFormContainerDiv form .MuiOutlinedInput-notchedOutline {
   border-color: #fff !important;
@@ -317,6 +319,11 @@ a {
   top: 4px;
   left: 0;
   cursor: pointer;
+}
+.registerText {
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.2rem;
 }
 
 .bootstrapContainer {

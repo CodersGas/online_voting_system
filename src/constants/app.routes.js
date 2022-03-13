@@ -8,6 +8,7 @@ import AdminHome from "../pages/adminHome";
 import Voters from "../pages/voters";
 import Parties from "../pages/parties";
 import Positions from "../pages/positions";
+import Register from "../pages/register";
 
 export const AppRoutes = {
   ADMIN: [
@@ -42,7 +43,12 @@ export const AppRoutes = {
       path: AUTH_ROUTES.login,
       exact: true,
       element: <Login />
-    }
+    },
+    {
+      path: AUTH_ROUTES.register,
+      exact: true,
+      element: <Register />
+    },
   ],
   USER: [
     {

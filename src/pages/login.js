@@ -5,13 +5,14 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { AUTH_SERVICE } from "../services/auth.service";
 import { setUserLoginDetails } from "../store/actions";
 import { setToken } from "../helpers/common.helpers";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Layout from "../components/Layout";
 
 const ValidationSchema = yup.object().shape({
@@ -142,6 +143,12 @@ const Login = () => {
                   Login
                 </Button>
               </Grid>
+
+              <Box display="flex" justifyContent="flex-end" mt={3} width={1} >
+                <Link to="/register" className="registerText" >
+                  Register
+                </Link>
+              </Box>
             </Grid>
           </form>
         </div>

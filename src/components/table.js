@@ -109,7 +109,6 @@ const TableComponent = ({
                   {row.name}
                 </TableCell>
                 <TableCell align="left">{row.email}</TableCell>
-                <TableCell align="left">{row.dob}</TableCell>
                 <TableCell align="left">{row.phone}</TableCell>
                 <TableCell align="left">
                   <div className="tableActionsDiv" >

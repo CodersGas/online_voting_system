@@ -17,5 +17,19 @@ export const AUTH_SERVICE = {
 
     data = await callAPI(configObj);
     return data;
+  },
+  "register": async(params) => {
+    const configObj = {
+      "method": "POST",
+      "url":  `${baseUrl}/`,
+      "data": params,
+      "headers": {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      }
+    };
+
+    data = await callAPI(configObj);
+    return data;
   }
 };

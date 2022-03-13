@@ -16,7 +16,7 @@ const Layout = ({ children }) => {
   const location = useLocation();
 
   useEffect(() => {
-    if (location.pathname === "/login") {
+    if (location.pathname === "/login" || location.pathname === "/register") {
       document.body.classList.add("animatedBackground");
     }else {
       document.body.classList.remove("animatedBackground");
