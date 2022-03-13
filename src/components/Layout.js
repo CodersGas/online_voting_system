@@ -1,17 +1,8 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Navigation from "./Navigation";
-import useGlobalState from "../store";
 
 const Layout = ({ children }) => {
-
-  const {
-    state: {
-      user: {
-        isLoggedIn
-      }
-    }
-  } = useGlobalState();
 
   const location = useLocation();
 
@@ -26,7 +17,7 @@ const Layout = ({ children }) => {
   return (
     <div className="layoutDiv" >
       {
-        isLoggedIn &&
+        location.pathname !== "/login" && location.pathname !== "/register" &&
         <Navigation />
       }
       { children }

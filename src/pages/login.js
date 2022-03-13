@@ -40,7 +40,7 @@ const Login = () => {
   const handleFormSubmit = async (data) => {
     const userInfo = {
       "details": {
-        "role": "admin",
+        "role": "user",
         "name": "Ashish Kumar",
       },
       "isLoggedIn": true
@@ -50,7 +50,11 @@ const Login = () => {
         user: userInfo
       }
     ));
-    navigate("/");
+    if(userInfo.details.role === "user") {
+      navigate("/home");
+    }else {
+      navigate("/");
+    }
 
     // try{
     //   setLoading(true);

@@ -10,5 +10,6 @@ export default {
   voters: [],
   positions: [],
   timeStarted: false,
-  timeCount: 0
+  timeCount: 0,
+  alreadyVoted: false
 };

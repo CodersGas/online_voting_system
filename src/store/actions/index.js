@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT, SET_CANDIDATES_DATA, SET_PARTIES_DATA, SET_POSITIONS_DATA, SET_VOTERS_DATA, UPDATE_TIME_STATE } from "../actionTypes";
+import { LOGIN, LOGOUT, SET_CANDIDATES_DATA, SET_PARTIES_DATA, SET_POSITIONS_DATA, SET_VOTERS_DATA, UPDATE_ALREADY_VOTED, UPDATE_TIME_STATE } from "../actionTypes";
 
 export const setUserLoginDetails = (payload) => {
   return {
@@ -45,6 +45,13 @@ export const setPositionsData = (payload) => {
 export const updateTimeState = (payload) => {
   return {
     type: UPDATE_TIME_STATE,
+    payload
+  };
+};
+
+export const updateVotedState = (payload) => {
+  return {
+    type: UPDATE_ALREADY_VOTED,
     payload
   };
 };

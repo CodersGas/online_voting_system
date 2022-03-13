@@ -12,7 +12,6 @@ export const COMMON_SERVICE = {
       "headers": {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        "Authorization": `Bearer ${getToken()}`
       }
     };
 
@@ -50,6 +49,20 @@ export const COMMON_SERVICE = {
   "getPositions": async(params) => {
     const configObj = {
       "method": "GET",
+      "url":  `${baseUrl}/`,
+      "headers": {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": `Bearer ${getToken()}`
+      }
+    };
+
+    data = await callAPI(configObj);
+    return data;
+  },
+  "castVote": async(params) => {
+    const configObj = {
+      "method": "POST",
       "url":  `${baseUrl}/`,
       "headers": {
         "Content-Type": "application/json",

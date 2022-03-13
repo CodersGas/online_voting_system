@@ -4,7 +4,7 @@ import Tooltip from "@mui/material/Tooltip";
 import IconButton from '@mui/material/IconButton';
 import useGlobalState from '../store';
 import { logoutUser } from '../store/actions';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import Drawer from '@mui/material/Drawer';
 import AdminMenu from "./adminMenu";
@@ -15,7 +15,8 @@ const Navigation = () => {
     dispatch,
     state: {
       user: {
-        details
+        details,
+        isLoggedIn
       }
     }
   } = useGlobalState();
@@ -34,33 +35,44 @@ const Navigation = () => {
   return (
     <>
       <div className='navigationBar' >
-        <div className="leftMenu" >
-          {
-            details.role === "admin" &&
-            <MenuIcon className="menuIcon" onClick={toggleNavDrawer} />
-          }
-          <p className='navigationTitle' >
-            Online Voting {details.role === "admin" ? "Admin Portal" : ""}
-          </p>
-        </div>
-        <Tooltip
-          arrow
-          title="Logout"
-        >
-          <IconButton onClick={handleLogout} >
-            <LogoutIcon className='logoutIcon' />
-          </IconButton>
-        </Tooltip>
-      </div>
+        {
+          isLoggedIn ?
+            <div className="leftMenu" >
+              {
+                details.role === "admin" &&
+                <MenuIcon className="menuIcon" onClick={toggleNavDrawer} />
+              }
+              <p className='navigationTitle' >
+                Online Voting {details.role === "admin" ? "Admin Portal" : "System"}
+              </p>
+            </div>
+            :
+            <div></div>
+        }
+
+        {
+          isLoggedIn ?
+            <Tooltip
+              arrow
+              title="Logout"
+            >
+              < IconButton onClick={handleLogout} >
+                <LogoutIcon className='logoutIcon' />
+              </IconButton>
+            </Tooltip>
+            :
+            <Link to="/login" className="logintext" >Login</Link>
+        }
+      </div >
 
       {
-        <Drawer
+        < Drawer
           anchor="left"
           open={openNav}
           onClose={toggleNavDrawer}
         >
           <AdminMenu />
-        </Drawer>
+        </Drawer >
       }
     </>
   )

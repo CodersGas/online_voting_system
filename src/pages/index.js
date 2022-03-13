@@ -18,7 +18,7 @@ const Pages = () => {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      navigate("/login");
+      navigate("/home");
     }
   }, []);
 
@@ -26,6 +26,15 @@ const Pages = () => {
     <Routes>
       {
         AppRoutes.AUTH.map((route, _) => (
+          <Route
+            key={route.path}
+            {...route}
+          />
+        ))
+      }
+
+      {
+        AppRoutes.PUBLIC.map((route, _) => (
           <Route
             key={route.path}
             {...route}
