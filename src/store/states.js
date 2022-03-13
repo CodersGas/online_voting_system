@@ -4,5 +4,8 @@ export default {
   user: {
     isLoggedIn: Boolean(getToken()) && Boolean(getUserCookie()),
     details: getUserCookie()
-  }
+  },
+  parties: [],
+  candidates: [],
+  voters: []
 };

@@ -1,5 +1,6 @@
 export const ADMIN_ROUTES = {
   "home": "/",
   "candidates": "/candidates",
-  "voters": "/voters"
+  "voters": "/voters",
+  "parties": "/parties"
 };

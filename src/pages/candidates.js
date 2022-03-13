@@ -1,9 +1,47 @@
+import { useState, useEffect } from "react";
 import Layout from "../components/Layout";
 import { Button, Grid } from "@mui/material";
 import AdminMenu from "../components/adminMenu";
 import AddIcon from "@mui/icons-material/Add";
+import CandidateForm from "../components/candidateForm";
+import ModalComponent from "../components/Modal";
+import useGlobalState from "../store";
+import TableComponent from "../components/table";
+import { COMMON_SERVICE } from "../services/common.services";
+import { setCandidatesData } from "../store/actions";
+
+const candidateHeader = ["S.no", "Name", "Email", "Position", "Party", "Bio", "Actions"];
 
 const Candidates = () => {
+
+  const {
+    state: {
+      candidates
+    },
+    dispatch
+  } = useGlobalState();
+
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleModal = () => setOpenModal(!openModal);
+
+  const getAllCandidates = async() => {
+    try{
+      const responseData = await COMMON_SERVICE.getCandidates();
+
+      if(responseData.success) {
+        dispatch(setCandidatesData({
+          candidates: [...responseData.data]
+        }));
+      }
+    }catch(error) {
+      console.log("error in getAllCandidates ", error);
+    }
+  }
+
+  useEffect(() => {
+    getAllCandidates();
+  }, []);
 
   return (
     <Layout>
@@ -19,17 +57,34 @@ const Candidates = () => {
                 Candidates
               </p>
 
-              <Button startIcon={<AddIcon />} variant="outlined" color="primary" className="addUserButton" >
+              <Button startIcon={<AddIcon />} variant="outlined" color="primary" className="addUserButton" onClick={handleModal} >
                 Add Candidate
               </Button>
             </div>
 
             <div className="lowerContentDiv" >
-
+              <TableComponent 
+                headerArray={candidateHeader}
+                dataArray={candidates}
+                modalTitle="Add Candidate"
+                fetchData={getAllCandidates}
+              />
             </div>
           </div>
         </Grid>
       </Grid>
+      {
+        openModal &&
+        <ModalComponent
+          open={openModal}
+          onClose={handleModal}
+          title="Add Candidate"
+          actionType="add"
+          fetchData={getAllCandidates}s
+        >
+          <CandidateForm />
+        </ModalComponent>
+      }
     </Layout>
   )
 }

@@ -39,7 +39,7 @@ const Login = () => {
     const userInfo = {
       "details": {
         "role": "admin",
-        "name": "response.data.name",
+        "name": "Ashish Kumar",
       },
       "isLoggedIn": true
     };
@@ -81,7 +81,8 @@ const Login = () => {
         <form
           onSubmit={handleSubmit(handleFormSubmit)}
         >
-          <Grid container spacing={4} >
+          <p className="loginFormTitle" >Login</p>
+          <Grid container >
             <Grid item md={12} xs={12} sm={12} >
               <Typography className="formLabel" >
                 Email

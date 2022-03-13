@@ -28,18 +28,23 @@ a {
   width: 100%;
   justify-content: center;
 }
+.loginFormContainerDiv form {
+  padding: 5rem;
+  box-shadow: #ddf0fd 0px 48px 100px 0px;
+}
 .loginButton {
   box-shadow: 
-    0.2em 0.2em 0 0 #19bc8b,
-    inset 0.2em 0.2em 0 0 #19bc8b !important;
+    0.2em 0.2em 0 0 #2196f3,
+    inset 0.2em 0.2em 0 0 #2196f3 !important;
   background: none;
   border: 1px solid !important;
   font: inherit !important;
   font-size: 1rem !important;
   line-height: 1 !important;
   padding: 1em 2em !important;
-  color: #19bc8b !important;
-  font-weight: 500;
+  color: #2196f3 !important;
+  font-weight: 600 !important;
+  margin-top: 2rem !important;
 }
 .loginButton:hover,
 .loginButton:focus {
@@ -49,8 +54,10 @@ a {
   color: #fff !important;
 }
 .formLabel {
-  font-weight: 600;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
   margin-bottom: 0.5rem !important;
+  margin-top: 1rem !important;
 }
 .navigationBar {
   width: 100%;
@@ -64,9 +71,15 @@ a {
   gap: 3rem;
   box-shadow: rgb(0 0 0 / 10%) 0px 4px 12px;
 }
-.navigationTitle {
+.navigationTitle,
+.loginFormTitle {
   font-size: 18px;
   font-weight: 600;
+}
+.loginFormTitle {
+  text-align: center;
+  padding: 0 0 1rem;
+  font-size: 24px;
 }
 .layoutDiv {
   height: 100%;
@@ -143,6 +156,53 @@ a {
 .logoutIcon:hover {
   transform: scale(1.2, 1.2);
 }
+.modalParentDiv {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 2rem;
+  width: 50%;
+}
+.modalTitleDiv,
+.modalActionsDiv {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #2196f3;
+  padding: 0 0 1rem;
+}
+.modalTitleDiv p {
+  font-size: 1.2rem !important;
+  font-weight: 600;
+}
+.modalActionsDiv {
+  border-bottom: none;
+  margin-top: 1.5rem;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding-bottom: 0;
+}
+.lowerContentDiv {
+  margin: 1rem 0;
+}
+.tableActionsDiv {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.editIcon {
+  color: #fbc02d;
+}
+.deleteIcon {
+  color: #f44336;
+}
+.tableHeadItem {
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+}
 
 .bootstrapContainer {
   margin: 0 auto;
@@ -169,12 +229,25 @@ a {
     width: 100%;
     margin: 0;
   }
-  .adminMenuDiv,
   .adminMenuGrid {
     display: none;
   }
   .menuIcon {
     display: inline-block !important;
+  }
+  .adminMenuDiv {
+    width: 250px;
+  }
+  .upperContentDiv {
+    padding: 0.5rem;
+  }
+  .upperContentDiv > p,
+  .upperContentDiv > button {
+    font-size: 15px !important;
+    font-weight: 600;
+  }
+  .modalParentDiv {
+    width: 100%;
   }
 }
 @media only screen and (max-width: 280px) {
@@ -182,11 +255,24 @@ a {
     width: 100%;
     margin: 0;
   }
-  .adminMenuDiv,
   .adminMenuGrid {
     display: none;
   }
   .menuIcon {
     display: inline-block !important;
+  }
+  .adminMenuDiv {
+    width: 250px;
+  }
+  .upperContentDiv {
+    padding: 0.5rem;
+  }
+  .upperContentDiv > p,
+  .upperContentDiv > button {
+    font-size: 15px !important;
+    font-weight: 600;
+  }
+  .modalParentDiv {
+    width: 100%;
   }
 }

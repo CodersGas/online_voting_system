@@ -6,6 +6,7 @@ import Login from "../pages/login";
 import Candidates from "../pages/candidates";
 import AdminHome from "../pages/adminHome";
 import Voters from "../pages/voters";
+import Parties from "../pages/parties";
 
 export const AppRoutes = {
   ADMIN: [
@@ -23,6 +24,11 @@ export const AppRoutes = {
       path: ADMIN_ROUTES.voters,
       exact: true,
       element: <Voters />
+    },
+    {
+      path: ADMIN_ROUTES.parties,
+      exact: true,
+      element: <Parties />
     },
   ],
   AUTH: [

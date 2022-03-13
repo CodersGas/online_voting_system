@@ -1,13 +1,13 @@
 import Layout from "../components/Layout";
-import { Grid, Button } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import AdminMenu from "../components/adminMenu";
 import AddIcon from "@mui/icons-material/Add";
 
-const Voters = () => {
+const Candidates = () => {
 
   return (
     <Layout>
-      <Grid container className="containerGrid" spacing={2} >
+      <Grid container className="containerGrid">
         <Grid item md={2} className="adminMenuGrid" >
           <AdminMenu />
         </Grid>
@@ -16,8 +16,12 @@ const Voters = () => {
           <div className="mainContentDiv" >
             <div className="upperContentDiv" >
               <p>
-                Voters
+                Parties
               </p>
+
+              <Button startIcon={<AddIcon />} variant="outlined" color="primary" className="addUserButton" >
+                Add Party
+              </Button>
             </div>
 
             <div className="lowerContentDiv" >
@@ -30,4 +34,4 @@ const Voters = () => {
   )
 }
 
-export default Voters;
+export default Candidates;
