@@ -32,5 +32,19 @@ export const COMMON_SERVICE = {
 
     data = await callAPI(configObj);
     return data;
+  },
+  "getParties": async(params) => {
+    const configObj = {
+      "method": "GET",
+      "url":  `${baseUrl}/`,
+      "headers": {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": `Bearer ${getToken()}`
+      }
+    };
+
+    data = await callAPI(configObj);
+    return data;
   }
 };

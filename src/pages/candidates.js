@@ -66,7 +66,7 @@ const Candidates = () => {
               <TableComponent 
                 headerArray={candidateHeader}
                 dataArray={candidates}
-                modalTitle="Add Candidate"
+                modalTitle="Edit Candidate"
                 fetchData={getAllCandidates}
                 canEdit={true}
                 canDelete={true}

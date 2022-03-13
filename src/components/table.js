@@ -5,6 +5,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ModalComponent from "./Modal";
 import CandidateForm from "./candidateForm";
 import { ADMIN_SERVICE } from "../services/admin.services";
+import { useLocation } from "react-router-dom";
+import AddPartyForm from "./addPartyForm";
 
 const TableComponent = ({
   headerArray,
@@ -12,8 +14,10 @@ const TableComponent = ({
   modalTitle,
   fetchData,
   canEdit,
-  canDelete
+  canDelete,
 }) => {
+
+  const { pathname } = useLocation();
 
   const [openEditModal, setOpenEditModal] = useState(false);
   const [editData, setEditData] = useState(null);
@@ -53,42 +57,111 @@ const TableComponent = ({
           </TableRow>
         </TableHead>
         <TableBody>
-          {dataArray.map((row, index) => (
-            <TableRow
-              key={row.name}
-            >
-              <TableCell align="left">
-                {index + 1}
-              </TableCell>
-              <TableCell align="left" >
-                {row.name}
-              </TableCell>
-              <TableCell align="left">{row.email}</TableCell>
-              <TableCell align="left">{row.position || row.dob}</TableCell>
-              <TableCell align="left">{row.party || row.phone}</TableCell>
-              {
-                row.bio &&
+          {
+            pathname === "/candidates" &&
+            dataArray.map((row, index) => (
+              <TableRow
+                key={row.name}
+              >
+                <TableCell align="left">
+                  {index + 1}
+                </TableCell>
+                <TableCell align="left" >
+                  {row.name}
+                </TableCell>
+                <TableCell align="left">{row.email}</TableCell>
+                <TableCell align="left">{row.position}</TableCell>
+                <TableCell align="left">{row.party}</TableCell>
                 <TableCell align="left">{row.bio}</TableCell>
-              }
-              <TableCell align="left">
-                <div className="tableActionsDiv" >
-                  {
-                    canEdit &&
-                    <IconButton disabled={loading} onClick={() => handleEditModal(row)} >
-                      <EditIcon className="editIcon" />
-                    </IconButton>
-                  }
+                <TableCell align="left">
+                  <div className="tableActionsDiv" >
+                    {
+                      canEdit &&
+                      <IconButton disabled={loading} onClick={() => handleEditModal(row)} >
+                        <EditIcon className="editIcon" />
+                      </IconButton>
+                    }
 
-                  {
-                    canDelete &&
-                    <IconButton disabled={loading} onClick={() => handleDeleteData(row.id)} >
-                      <DeleteIcon className="deleteIcon" />
-                    </IconButton>
-                  }
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
+                    {
+                      canDelete &&
+                      <IconButton disabled={loading} onClick={() => handleDeleteData(row.id)} >
+                        <DeleteIcon className="deleteIcon" />
+                      </IconButton>
+                    }
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))
+          }
+
+          {
+            pathname === "/voters" &&
+            dataArray.map((row, index) => (
+              <TableRow
+                key={row.name}
+              >
+                <TableCell align="left">
+                  {index + 1}
+                </TableCell>
+                <TableCell align="left" >
+                  {row.name}
+                </TableCell>
+                <TableCell align="left">{row.email}</TableCell>
+                <TableCell align="left">{row.dob}</TableCell>
+                <TableCell align="left">{row.phone}</TableCell>
+                <TableCell align="left">
+                  <div className="tableActionsDiv" >
+                    {
+                      canEdit &&
+                      <IconButton disabled={loading} onClick={() => handleEditModal(row)} >
+                        <EditIcon className="editIcon" />
+                      </IconButton>
+                    }
+
+                    {
+                      canDelete &&
+                      <IconButton disabled={loading} onClick={() => handleDeleteData(row.id)} >
+                        <DeleteIcon className="deleteIcon" />
+                      </IconButton>
+                    }
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))
+          }
+
+          {
+            pathname === "/parties" &&
+            dataArray.map((row, index) => (
+              <TableRow
+                key={row.name}
+              >
+                <TableCell align="left">
+                  {index + 1}
+                </TableCell>
+                <TableCell align="left" >
+                  {row.name}
+                </TableCell>
+                <TableCell align="left">
+                  <div className="tableActionsDiv" >
+                    {
+                      canEdit &&
+                      <IconButton disabled={loading} onClick={() => handleEditModal(row)} >
+                        <EditIcon className="editIcon" />
+                      </IconButton>
+                    }
+
+                    {
+                      canDelete &&
+                      <IconButton disabled={loading} onClick={() => handleDeleteData(row.id)} >
+                        <DeleteIcon className="deleteIcon" />
+                      </IconButton>
+                    }
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))
+          }
         </TableBody>
       </Table>
       {
@@ -100,7 +173,15 @@ const TableComponent = ({
           actionType="edit"
           editData={editData}
         >
-          <CandidateForm />
+          {
+            pathname === "/candidates" ?
+            <CandidateForm />
+            :
+            pathname === "/parties" ?
+            <AddPartyForm />
+            :
+            null
+          }
         </ModalComponent>
       }
     </TableContainer>

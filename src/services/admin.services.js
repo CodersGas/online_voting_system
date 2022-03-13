@@ -35,4 +35,19 @@ export const ADMIN_SERVICE = {
     data = await callAPI(configObj);
     return data;
   },
+  "addParty": async(params) => {
+    const configObj = {
+      "method": "POST",
+      "url":  `${baseUrl}/`,
+      "data": params,
+      "headers": {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": `Bearer ${getToken()}`
+      }
+    };
+
+    data = await callAPI(configObj);
+    return data;
+  }
 };
