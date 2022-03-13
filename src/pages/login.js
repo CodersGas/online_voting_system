@@ -38,7 +38,7 @@ const Login = () => {
   const handleFormSubmit = async (data) => {
     const userInfo = {
       "details": {
-        "role": "response.data.role",
+        "role": "admin",
         "name": "response.data.name",
       },
       "isLoggedIn": true
@@ -48,7 +48,7 @@ const Login = () => {
         user: userInfo
       }
     ));
-    navigate("/candidates");
+    navigate("/");
 
     // try{
     //   setLoading(true);

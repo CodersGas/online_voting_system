@@ -4,9 +4,16 @@ import { AUTH_ROUTES } from "./auth.routes";
 
 import Login from "../pages/login";
 import Candidates from "../pages/candidates";
+import AdminHome from "../pages/adminHome";
+import Voters from "../pages/voters";
 
 export const AppRoutes = {
   ADMIN: [
+    {
+      path: ADMIN_ROUTES.home,
+      exact: true,
+      element: <AdminHome />
+    },
     {
       path: ADMIN_ROUTES.candidates,
       exact: true,
@@ -15,7 +22,7 @@ export const AppRoutes = {
     {
       path: ADMIN_ROUTES.voters,
       exact: true,
-      element: ""
+      element: <Voters />
     },
   ],
   AUTH: [
