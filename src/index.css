@@ -54,6 +54,13 @@ a {
   border: 6px solid #fff;
   border-radius: 1rem;
 }
+.loginFormContainerDiv form .MuiFormHelperText-root.Mui-error {
+  color: #fff !important;
+  font-size: 1rem !important;
+}
+.loginFormContainerDiv form .MuiOutlinedInput-notchedOutline {
+  border-color: #fff !important;
+}
 .loginButton {
   box-shadow: 
     0.2em 0.2em 0 0 #fff,
