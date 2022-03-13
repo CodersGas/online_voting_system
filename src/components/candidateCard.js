@@ -65,7 +65,7 @@ const CandidateCard = ({ data }) => {
 
           <div className="positionInfoDiv" >
             <p>
-              Party
+              Position
             </p>
 
             <p className="positionName">
