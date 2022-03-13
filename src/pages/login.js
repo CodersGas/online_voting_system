@@ -12,6 +12,7 @@ import { setUserLoginDetails } from "../store/actions";
 import { setToken } from "../helpers/common.helpers";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useNavigate } from "react-router-dom";
+import Layout from "../components/Layout";
 
 const ValidationSchema = yup.object().shape({
   email: yup.string().email("Please enter valid email").required("Please enter email"),
@@ -76,73 +77,76 @@ const Login = () => {
   }
 
   return (
-    <div className="bootstrapContainer" >
-      <div className="loginFormContainerDiv" >
-        <form
-          onSubmit={handleSubmit(handleFormSubmit)}
-        >
-          <p className="loginFormTitle" >Login</p>
-          <Grid container >
-            <Grid item md={12} xs={12} sm={12} >
-              <Typography className="formLabel" >
-                Email
-              </Typography>
+    <Layout>
+      <div className="bootstrapContainer" >
+        <div className="loginFormContainerDiv" >
+          <p className="loginFormTitle" >Online Voting System</p>
+          <form
+            onSubmit={handleSubmit(handleFormSubmit)}
+          >
+            <p className="loginFormTitle" >Login</p>
+            <Grid container >
+              <Grid item md={12} xs={12} sm={12} >
+                <Typography className="formLabel" >
+                  Email
+                </Typography>
 
-              <Controller
-                name="email"
-                control={control}
-                render={({
-                  field: { onChange, value },
-                  fieldState: { error }
-                }) => (
-                  <TextField
-                    fullWidth
-                    value={value || ""}
-                    onChange={onChange}
-                    error={error?.message}
-                    helperText={error?.message}
-                    placeholder="enter email"
-                  />
-                )}
-              />
+                <Controller
+                  name="email"
+                  control={control}
+                  render={({
+                    field: { onChange, value },
+                    fieldState: { error }
+                  }) => (
+                    <TextField
+                      fullWidth
+                      value={value || ""}
+                      onChange={onChange}
+                      error={error?.message}
+                      helperText={error?.message}
+                      placeholder="enter email"
+                    />
+                  )}
+                />
+              </Grid>
+
+              <Grid item md={12} xs={12} sm={12} >
+                <Typography className="formLabel">
+                  Password
+                </Typography>
+
+                <Controller
+                  name="password"
+                  control={control}
+                  render={({
+                    field: { onChange, value },
+                    fieldState: { error }
+                  }) => (
+                    <TextField
+                      fullWidth
+                      value={value || ""}
+                      onChange={onChange}
+                      error={error?.message}
+                      helperText={error?.message}
+                      placeholder="enter password"
+                      inputProps={{
+                        type: "password"
+                      }}
+                    />
+                  )}
+                />
+              </Grid>
+
+              <Grid item md={12} xs={12} sm={12} >
+                <Button className="loginButton" type="submit" fullWidth endIcon={loading && <CircularProgress size={20} />} disabled={loading} >
+                  Login
+                </Button>
+              </Grid>
             </Grid>
-
-            <Grid item md={12} xs={12} sm={12} >
-              <Typography className="formLabel">
-                Password
-              </Typography>
-
-              <Controller
-                name="password"
-                control={control}
-                render={({
-                  field: { onChange, value },
-                  fieldState: { error }
-                }) => (
-                  <TextField
-                    fullWidth
-                    value={value || ""}
-                    onChange={onChange}
-                    error={error?.message}
-                    helperText={error?.message}
-                    placeholder="enter password"
-                    inputProps={{
-                      type: "password"
-                    }}
-                  />
-                )}
-              />
-            </Grid>
-
-            <Grid item md={12} xs={12} sm={12} >
-              <Button className="loginButton" type="submit" fullWidth endIcon={loading && <CircularProgress size={20} />} disabled={loading} >
-                Login
-              </Button>
-            </Grid>
-          </Grid>
-        </form>
+          </form>
+        </div>
       </div>
-    </div>
+    </Layout>
   )
 }
 
