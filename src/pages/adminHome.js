@@ -1,8 +1,9 @@
 import AdminMenu from "../components/adminMenu";
 import Layout from "../components/Layout";
-import { Grid, Button } from "@mui/material";
+import { Grid } from "@mui/material";
 import useGlobalState from "../store";
-import AddIcon from "@mui/icons-material/Add";
+import TimerComponent from "../components/timerComponent";
+import AddTimer from "../components/addTimer";
 
 const AdminHome = () => {
 
@@ -10,7 +11,8 @@ const AdminHome = () => {
     state: {
       user: {
         details
-      }
+      },
+      timeStarted
     }
   } = useGlobalState();
 
@@ -30,7 +32,12 @@ const AdminHome = () => {
             </div>
 
             <div className="lowerContentDiv" >
-
+              {
+                timeStarted ?
+                <TimerComponent />
+                :
+                <AddTimer />
+              }
             </div>
           </div>
         </Grid>

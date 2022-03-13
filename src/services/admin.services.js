@@ -94,5 +94,35 @@ export const ADMIN_SERVICE = {
 
     data = await callAPI(configObj);
     return data;
+  },
+  "startTimer": async(params) => {
+    const configObj = {
+      "method": "POST",
+      "url":  `${baseUrl}/`,
+      "data": params,
+      "headers": {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": `Bearer ${getToken()}`
+      }
+    };
+
+    data = await callAPI(configObj);
+    return data;
+  },
+  "finishTimer": async(params) => {
+    const configObj = {
+      "method": "POST",
+      "url":  `${baseUrl}/`,
+      "data": params,
+      "headers": {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": `Bearer ${getToken()}`
+      }
+    };
+
+    data = await callAPI(configObj);
+    return data; 
   }
 };

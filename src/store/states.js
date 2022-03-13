@@ -8,5 +8,7 @@ export default {
   parties: [],
   candidates: [],
   voters: [],
-  positions: []
+  positions: [],
+  timeStarted: false,
+  timeCount: 0
 };
