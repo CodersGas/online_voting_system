@@ -1,5 +1,5 @@
 import { deleteToken, deleteUserCookie, setUserCookie } from "../../helpers/common.helpers";
-import { LOGOUT, LOGIN, SET_PARTIES_DATA, SET_VOTERS_DATA, SET_CANDIDATES_DATA } from "../actionTypes";
+import { LOGOUT, LOGIN, SET_PARTIES_DATA, SET_VOTERS_DATA, SET_CANDIDATES_DATA, SET_POSITIONS_DATA } from "../actionTypes";
 
 export default (state, action) => {
   console.log(action);
@@ -17,6 +17,7 @@ export default (state, action) => {
     case SET_PARTIES_DATA:
     case SET_VOTERS_DATA:
     case SET_CANDIDATES_DATA:
+    case SET_POSITIONS_DATA:
       return { ...state, ...action.payload };
     default:
       console.log(`Action type ${action.type} does not exist`);

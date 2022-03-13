@@ -22,6 +22,10 @@ const AdminMenu = () => {
       <Link to="/parties" className={pathname === "/parties" ? "selectedMenu" : ""} >
         <p>Parties</p>
       </Link>
+
+      <Link to="/positions" className={pathname === "/positions" ? "selectedMenu" : ""} >
+        <p>Positions</p>
+      </Link>
     </div>
   )
 }

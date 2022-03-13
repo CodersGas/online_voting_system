@@ -7,5 +7,6 @@ export default {
   },
   parties: [],
   candidates: [],
-  voters: []
+  voters: [],
+  positions: []
 };

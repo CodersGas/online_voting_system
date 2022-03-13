@@ -7,6 +7,7 @@ import CandidateForm from "./candidateForm";
 import { ADMIN_SERVICE } from "../services/admin.services";
 import { useLocation } from "react-router-dom";
 import AddPartyForm from "./addPartyForm";
+import AddPositionForm from "./addPositionForm";
 
 const TableComponent = ({
   headerArray,
@@ -31,6 +32,7 @@ const TableComponent = ({
   const handleDeleteData = async (id) => {
     try {
       setLoading(true);
+      // TODO:: change service according to pathname here
       const responseData = await ADMIN_SERVICE.deleteCandidate({ "id": id });
 
       if (responseData.success) {
@@ -162,6 +164,39 @@ const TableComponent = ({
               </TableRow>
             ))
           }
+
+          {
+            pathname === "/positions" &&
+            dataArray.map((row, index) => (
+              <TableRow
+                key={row.name}
+              >
+                <TableCell align="left">
+                  {index + 1}
+                </TableCell>
+                <TableCell align="left" >
+                  {row.name}
+                </TableCell>
+                <TableCell align="left">
+                  <div className="tableActionsDiv" >
+                    {
+                      canEdit &&
+                      <IconButton disabled={loading} onClick={() => handleEditModal(row)} >
+                        <EditIcon className="editIcon" />
+                      </IconButton>
+                    }
+
+                    {
+                      canDelete &&
+                      <IconButton disabled={loading} onClick={() => handleDeleteData(row.id)} >
+                        <DeleteIcon className="deleteIcon" />
+                      </IconButton>
+                    }
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))
+          }
         </TableBody>
       </Table>
       {
@@ -175,12 +210,15 @@ const TableComponent = ({
         >
           {
             pathname === "/candidates" ?
-            <CandidateForm />
-            :
-            pathname === "/parties" ?
-            <AddPartyForm />
-            :
-            null
+              <CandidateForm />
+              :
+              pathname === "/parties" ?
+                <AddPartyForm />
+                :
+                pathname === "/positions" ?
+                  <AddPositionForm />
+                  :
+                  null
           }
         </ModalComponent>
       }
