@@ -1,9 +1,48 @@
+import { useState, useEffect } from "react";
 import Layout from "../components/Layout";
-import { Grid, Button } from "@mui/material";
+import { Grid } from "@mui/material";
 import AdminMenu from "../components/adminMenu";
-import AddIcon from "@mui/icons-material/Add";
+import useGlobalState from "../store";
+import TableComponent from "../components/table";
+import { COMMON_SERVICE } from "../services/common.services";
+import { setCandidatesData } from "../store/actions";
+
+const voterHeader = ["S.no", "Name", "Email", "DoB", "Phone", "Actions"];
+
+const dummyVoter = [
+  {
+    "name": 'Ashish',
+    "dob": "27 Sept, 1997",
+    "phone": "9958750734",
+    "email": "abc@gmail.com"
+  }
+]
 
 const Voters = () => {
+  const {
+    state: {
+      voters
+    },
+    dispatch
+  } = useGlobalState();
+
+  const getAllVoters = async () => {
+    try {
+      const responseData = await COMMON_SERVICE.getVoters();
+
+      if (responseData.success) {
+        dispatch(setCandidatesData({
+          voters: [...responseData.data]
+        }));
+      }
+    } catch (error) {
+      console.log("error in getAllCandidates ", error);
+    }
+  }
+
+  useEffect(() => {
+    getAllVoters();
+  }, []);
 
   return (
     <Layout>
@@ -21,7 +60,14 @@ const Voters = () => {
             </div>
 
             <div className="lowerContentDiv" >
-
+              <TableComponent
+                headerArray={voterHeader}
+                dataArray={dummyVoter} // TODO:: replace dataArray param
+                modalTitle=""
+                fetchData={null}
+                canEdit={false}
+                canDelete={true}
+              />
             </div>
           </div>
         </Grid>

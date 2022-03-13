@@ -10,7 +10,9 @@ const TableComponent = ({
   headerArray,
   dataArray,
   modalTitle,
-  fetchData
+  fetchData,
+  canEdit,
+  canDelete
 }) => {
 
   const [openEditModal, setOpenEditModal] = useState(false);
@@ -22,17 +24,17 @@ const TableComponent = ({
     setOpenEditModal(!openEditModal);
   }
 
-  const handleDeleteData = async(id) => {
-    try{
+  const handleDeleteData = async (id) => {
+    try {
       setLoading(true);
-      const responseData = await ADMIN_SERVICE.deleteCandidate({"id": id});
+      const responseData = await ADMIN_SERVICE.deleteCandidate({ "id": id });
 
-      if(responseData.success) {
+      if (responseData.success) {
         fetchData();
-      }else {
+      } else {
         console.log("Unable to delete right now ", responseData);
       }
-    }catch(error) {
+    } catch (error) {
       console.log("error in handleDeleteData of Table ", error);
     }
     setLoading(false);
@@ -62,18 +64,27 @@ const TableComponent = ({
                 {row.name}
               </TableCell>
               <TableCell align="left">{row.email}</TableCell>
-              <TableCell align="left">{row.position}</TableCell>
-              <TableCell align="left">{row.party}</TableCell>
-              <TableCell align="left">{row.bio}</TableCell>
+              <TableCell align="left">{row.position || row.dob}</TableCell>
+              <TableCell align="left">{row.party || row.phone}</TableCell>
+              {
+                row.bio &&
+                <TableCell align="left">{row.bio}</TableCell>
+              }
               <TableCell align="left">
                 <div className="tableActionsDiv" >
-                  <IconButton disabled={loading} onClick={() => handleEditModal(row)} >
-                    <EditIcon className="editIcon" />
-                  </IconButton>
+                  {
+                    canEdit &&
+                    <IconButton disabled={loading} onClick={() => handleEditModal(row)} >
+                      <EditIcon className="editIcon" />
+                    </IconButton>
+                  }
 
-                  <IconButton disabled={loading} onClick={() => handleDeleteData(row.id)} >
-                    <DeleteIcon className="deleteIcon" />
-                  </IconButton>
+                  {
+                    canDelete &&
+                    <IconButton disabled={loading} onClick={() => handleDeleteData(row.id)} >
+                      <DeleteIcon className="deleteIcon" />
+                    </IconButton>
+                  }
                 </div>
               </TableCell>
             </TableRow>

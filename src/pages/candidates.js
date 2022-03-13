@@ -68,6 +68,8 @@ const Candidates = () => {
                 dataArray={candidates}
                 modalTitle="Add Candidate"
                 fetchData={getAllCandidates}
+                canEdit={true}
+                canDelete={true}
               />
             </div>
           </div>
@@ -80,7 +82,7 @@ const Candidates = () => {
           onClose={handleModal}
           title="Add Candidate"
           actionType="add"
-          fetchData={getAllCandidates}s
+          fetchData={getAllCandidates}
         >
           <CandidateForm />
         </ModalComponent>
