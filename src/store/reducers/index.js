@@ -2,7 +2,8 @@ import { deleteToken, deleteUserCookie, setUserCookie } from "../../helpers/comm
 import { LOGOUT, LOGIN } from "../actionTypes";
 
 export default (state, action) => {
-  switch(action) {
+  console.log(action);
+  switch(action.type) {
     case LOGOUT:
       deleteToken();
       deleteUserCookie();
@@ -13,5 +14,7 @@ export default (state, action) => {
     case LOGIN:
       setUserCookie(action.payload.user.details);
       return { ...state, ...action.payload };
+    default:
+      console.log(`Action type ${action.type} does not exist`);
   };
 };

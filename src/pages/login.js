@@ -11,6 +11,7 @@ import { AUTH_SERVICE } from "../services/auth.service";
 import { setUserLoginDetails } from "../store/actions";
 import { setToken } from "../helpers/common.helpers";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useNavigate } from "react-router-dom";
 
 const ValidationSchema = yup.object().shape({
   email: yup.string().email("Please enter valid email").required("Please enter email"),
@@ -21,7 +22,7 @@ const Login = () => {
 
   const {
     dispatch
-  } = useGlobalState(ValidationSchema);
+  } = useGlobalState();
 
   const {
     control,
@@ -30,30 +31,47 @@ const Login = () => {
     resolver: yupResolver(ValidationSchema)
   });
 
+  const navigate = useNavigate();
+
   const [loading, setLoading] = useState(false);
 
-  const handleFormSubmit = async(data) => {
-    try{
-      setLoading(true);
-      const response = await AUTH_SERVICE.login(data);
-
-      if(response.status === "success") {
-
-        const userInfo = {
-          "role": response.data.role,
-          "name": response.data.name
-        };
-
-        setToken(response.data.token);
-        dispatch(setUserLoginDetails(
-          {
-            user: userInfo
-          }
-        ));
+  const handleFormSubmit = async (data) => {
+    const userInfo = {
+      "details": {
+        "role": "response.data.role",
+        "name": "response.data.name",
+      },
+      "isLoggedIn": true
+    };
+    dispatch(setUserLoginDetails(
+      {
+        user: userInfo
       }
-    }catch(error) {
-      console.log("error in Login handleFormSubmit -> ", error);
-    } 
+    ));
+    navigate("/candidates");
+
+    // try{
+    //   setLoading(true);
+    //   const response = await AUTH_SERVICE.login(data);
+
+    //   if(response.status === "success") {
+
+    //     const userInfo = {
+    //       "role": response.data.role,
+    //       "name": response.data.name,
+    //       "isLoggedIn": true
+    //     };
+
+    //     setToken(response.data.token);
+    //     dispatch(setUserLoginDetails(
+    //       {
+    //         user: userInfo
+    //       }
+    //     ));
+    //   }
+    // }catch(error) {
+    //   console.log("error in Login handleFormSubmit -> ", error);
+    // } 
     setLoading(false);
   }
 

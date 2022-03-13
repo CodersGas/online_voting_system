@@ -1,31 +1,36 @@
-import { Navigate, Routes, Route } from "react-router-dom"; 
+import { useEffect } from "react";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom"; 
 import { AppRoutes } from "../constants/app.routes";
 import useGlobalState from "../store";
 import Login from "./login";
 
 const Pages = () => {
   const {
-    state: {
-      user: {
-        isLoggedIn,
-        details
-      }
-    }
+    state
   } = useGlobalState();
+  console.log('state ', state)
+
+  const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   if(!isLoggedIn) {
+  //     navigate("/login");
+  //   }
+  // }, []);
 
   return (
     <Routes>
       {
-        AppRoutes.AUTH.map((route, _) => {
+        AppRoutes.AUTH.map((route, _) => (
           <Route 
             key={route.path}
             {...route}
           />
-        })
+        ))
       }
 
-      {
-        isLoggedIn ?
+      {/* {
+        isLoggedIn &&
         <>
           {
             details.role === "admin" ?
@@ -33,6 +38,11 @@ const Pages = () => {
               <Route 
                 key={route.path}
                 {...route}
+                render={() => {
+                  if(!isLoggedIn) {
+                    return <Navigate to="/login" />
+                  }
+                }}
               />
             ))
             :
@@ -40,13 +50,21 @@ const Pages = () => {
               <Route 
                 key={route.path}
                 {...route}
+                render={() => {
+                  if(!isLoggedIn) {
+                    return <Navigate to="/login" />
+                  }
+                }}
               />
             ))
           }
         </>
-        :
-        <Route path="*" element={<Login />} />
       }
+
+      {
+        !isLoggedIn && 
+        <Route path="/login" element={ <Login /> } />
+      } */}
     </Routes>
   )
 }

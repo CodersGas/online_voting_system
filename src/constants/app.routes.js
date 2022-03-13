@@ -3,13 +3,14 @@ import { USER_ROUTES } from "./user.routes";
 import { AUTH_ROUTES } from "./auth.routes";
 
 import Login from "../pages/login";
+import Candidates from "../pages/candidates";
 
 export const AppRoutes = {
   ADMIN: [
     {
       path: ADMIN_ROUTES.candidates,
       exact: true,
-      element: ""
+      element: <Candidates />
     },
     {
       path: ADMIN_ROUTES.voters,
