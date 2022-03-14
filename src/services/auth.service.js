@@ -21,7 +21,7 @@ export const AUTH_SERVICE = {
   "register": async(params) => {
     const configObj = {
       "method": "POST",
-      "url":  `${baseUrl}/`,
+      "url":  `${baseUrl}/user/register`,
       "data": params,
       "headers": {
         "Content-Type": "application/json",

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -11,6 +11,8 @@ import { AUTH_SERVICE } from "../services/auth.service";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Link, useNavigate } from "react-router-dom";
 import Layout from "../components/Layout";
+import { signInWithPhoneNumber } from "firebase/auth";
+import { auth } from "../config/firebase.config";
 
 const ValidationSchema = yup.object().shape({
   name: yup.string().required("Please enter your name"),
@@ -21,7 +23,7 @@ const ValidationSchema = yup.object().shape({
   otp: yup.string()
     .when("isRegistrationStarted", {
       is: true,
-      then: yup.string().max(6, "Please enter correct OTP").required("Please enter OTP sent to your mobile & email")
+      then: yup.string().max(6, "Please enter correct OTP").required("Please enter OTP sent to your mobile")
     }),
 });
 
@@ -38,15 +40,50 @@ const Register = () => {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
+  const [registerFormData, setRegisterFormData] = useState(null);
+  const [confirmationPhoneResult, setConfirmationPhoneResult] = useState(null);
+  const [otpSent, setOtpSent] = useState(false);
 
   const handleFormSubmit = async (data) => {
     try {
       setValue("isRegistrationStarted", true);
       setLoading(true);
-      const response = await AUTH_SERVICE.register(data);
+      setRegisterFormData(data);
 
-      if (response.status === "success") {
-        navigate("/login");
+      if (!otpSent) {
+        const phoneNumber = "+91" + data.phone;
+        const appVerifier = window.recaptchaVerifier;
+
+        signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+          .then((confirmationResult) => {
+            setConfirmationPhoneResult(confirmationResult);
+            setOtpSent(true);
+          })
+          .catch(error => {
+            console.log("error while sending sms ", error);
+          });
+      } else {
+        confirmationPhoneResult.confirm(data.otp).then(async(result) => {
+          const payload = { ...registerFormData };
+          delete payload.otp;
+          delete payload.isRegistrationStarted;
+
+          try {
+            const responseData = await AUTH_SERVICE.register(registerFormData);
+
+            if (responseData.success) {
+              console.log("user registered");
+              navigate("/login");
+            } else {
+              console.log("error while registering ", responseData);
+            }
+          } catch(error) {
+            console.log("error while calling register user ", error);
+          }
+
+        }).catch((error) => {
+            console.log("error while verifying otp ", error);
+          });
       }
     } catch (error) {
       console.log("error in Login handleFormSubmit -> ", error);
@@ -188,9 +225,16 @@ const Register = () => {
               }
 
               <Grid item md={12} xs={12} sm={12} >
-                <Button className="loginButton" type="submit" fullWidth endIcon={loading && <CircularProgress size={20} />} disabled={loading} >
-                  Register
-                </Button>
+                {
+                  !otpSent ?
+                    <Button className="loginButton" type="submit" fullWidth endIcon={loading && <CircularProgress size={20} />} disabled={loading} >
+                      Get OTP
+                    </Button>
+                    :
+                    <Button className="loginButton" type="submit" fullWidth endIcon={loading && <CircularProgress size={20} />} disabled={loading} >
+                      Register
+                    </Button>
+                }
               </Grid>
 
               <Box display="flex" justifyContent="flex-end" mt={3} width={1} >
