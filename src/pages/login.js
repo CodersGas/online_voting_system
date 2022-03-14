@@ -241,11 +241,11 @@ const Login = () => {
               <Grid item md={12} xs={12} sm={12} >
                 {
                   !otpSent ?
-                    <Button className="loginButton" type="submit" fullWidth endIcon={loading && <CircularProgress size={20} />} disabled={loading} >
+                    <Button className="loginButton" type="submit" fullWidth endIcon={loading && <CircularProgress size={20} className="loginRegisterProgressColor" />} disabled={loading} >
                       Get OTP
                     </Button>
                     :
-                    <Button className="loginButton" type="submit" fullWidth endIcon={loading && <CircularProgress size={20} />} disabled={loading} >
+                    <Button className="loginButton" type="submit" fullWidth endIcon={loading && <CircularProgress size={20} className="loginRegisterProgressColor" />} disabled={loading} >
                       Login
                     </Button>
                 }

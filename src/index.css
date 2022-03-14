@@ -387,6 +387,10 @@ a {
   align-items: center;
   gap: 1rem;
 }
+.loginRegisterProgressColor {
+  color: #fff !important;
+  font-size: 1.5rem !important;
+}
 
 .bootstrapContainer {
   margin: 0 auto;
