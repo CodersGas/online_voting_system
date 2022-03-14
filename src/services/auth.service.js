@@ -7,7 +7,7 @@ export const AUTH_SERVICE = {
   "login": async(params) => {
     const configObj = {
       "method": "POST",
-      "url":  `${baseUrl}/user/login`,
+      "url":  `${baseUrl}user/login`,
       "data": params,
       "headers": {
         "Content-Type": "application/json",
@@ -21,7 +21,7 @@ export const AUTH_SERVICE = {
   "register": async(params) => {
     const configObj = {
       "method": "POST",
-      "url":  `${baseUrl}/user/register`,
+      "url":  `${baseUrl}user/register`,
       "data": params,
       "headers": {
         "Content-Type": "application/json",
