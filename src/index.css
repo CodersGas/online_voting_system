@@ -382,6 +382,11 @@ a {
 .positionInfoDiv .positionName {
   font-weight: 600;
 }
+.rightNav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
 
 .bootstrapContainer {
   margin: 0 auto;

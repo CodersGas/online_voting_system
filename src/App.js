@@ -3,6 +3,8 @@ import ErrorBoundary from "./components/ErrorBounday";
 import Pages from "./pages";
 import { StateProvider, store } from "./store";
 import { createTheme, ThemeProvider } from "@mui/material";
+import 'react-toastify/dist/ReactToastify.css';
+import ToastNotification from "./components/toastNotification";
 
 const THEME = createTheme({
   typography: {
@@ -18,6 +20,7 @@ function App() {
         <ThemeProvider theme={THEME} >
           <StateProvider store={store} >
             <Pages />
+            <ToastNotification />
           </StateProvider>
         </ThemeProvider>
       </ErrorBoundary>

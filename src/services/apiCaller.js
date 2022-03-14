@@ -7,7 +7,7 @@ export const callAPI = async(configObj) => {
       return Promise.resolve(response);
     },
     function(error) {
-      return Promise.resolve(error);
+      return Promise.reject(error);
     }
   );
 

@@ -52,14 +52,17 @@ const Navigation = () => {
 
         {
           isLoggedIn ?
-            <Tooltip
-              arrow
-              title="Logout"
-            >
-              < IconButton onClick={handleLogout} >
-                <LogoutIcon className='logoutIcon' />
-              </IconButton>
-            </Tooltip>
+            <div className="rightNav" >
+              <p className="navigationTitle" >Hi, {details.name} 👋</p>
+              <Tooltip
+                arrow
+                title="Logout"
+              >
+                < IconButton onClick={handleLogout} >
+                  <LogoutIcon className='logoutIcon' />
+                </IconButton>
+              </Tooltip>
+            </div>
             :
             <Link to="/login" className="logintext" >Login</Link>
         }

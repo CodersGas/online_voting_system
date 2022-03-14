@@ -13,10 +13,11 @@ import { Link, useNavigate } from "react-router-dom";
 import Layout from "../components/Layout";
 import { signInWithPhoneNumber } from "firebase/auth";
 import { auth } from "../config/firebase.config";
+import { toast } from "react-toastify";
 
 const ValidationSchema = yup.object().shape({
   name: yup.string().required("Please enter your name"),
-  phone: yup.string().length(10, "Please enter valid phone number").required("Please enter date of birth"),
+  phone: yup.string().length(10, "Please enter valid phone number").required("Please enter phone number"),
   email: yup.string().email("Please enter valid email").required("Please enter email"),
   password: yup.string().min(8, "Password length too short").max(16, "Password too long").required("Please enter the password"),
   isRegistrationStarted: yup.bool(),
@@ -54,22 +55,27 @@ const Register = () => {
         const phoneNumber = "+91" + data.phone;
         const appVerifier = window.recaptchaVerifier;
 
-        signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+        await signInWithPhoneNumber(auth, phoneNumber, appVerifier)
           .then((confirmationResult) => {
             setConfirmationPhoneResult(confirmationResult);
             setOtpSent(true);
+            toast.success("OTP sent successfully");
           })
           .catch(error => {
             console.log("error while sending sms ", error);
+            setOtpSent(false);
+            setValue("isRegistrationStarted", false);
+            toast.error("Too many attempts. Please try after sometime");
           });
       } else {
         confirmationPhoneResult.confirm(data.otp).then(async(result) => {
           const payload = { ...registerFormData };
+          payload["role"] = "user";
           delete payload.otp;
           delete payload.isRegistrationStarted;
 
           try {
-            const responseData = await AUTH_SERVICE.register(registerFormData);
+            const responseData = await AUTH_SERVICE.register(payload);
 
             if (responseData.success) {
               console.log("user registered");
@@ -79,6 +85,8 @@ const Register = () => {
             }
           } catch(error) {
             console.log("error while calling register user ", error);
+            setOtpSent(false);
+            setValue("isRegistrationStarted", false);
           }
 
         }).catch((error) => {

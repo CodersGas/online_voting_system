@@ -2,7 +2,7 @@ import Cookie from "js-cookie";
 
 export const getToken = () => {
   if(window.localStorage) {
-    window.localStorage.getItem("token");
+    return window.localStorage.getItem("token");
   }
 };
 
