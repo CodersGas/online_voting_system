@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -68,7 +68,7 @@ const Register = () => {
             toast.error("Too many attempts. Please try after sometime");
           });
       } else {
-        confirmationPhoneResult.confirm(data.otp).then(async(result) => {
+        confirmationPhoneResult.confirm(data.otp).then(async (result) => {
           const payload = { ...registerFormData };
           payload["role"] = "user";
           delete payload.otp;
@@ -78,20 +78,21 @@ const Register = () => {
             const responseData = await AUTH_SERVICE.register(payload);
 
             if (responseData.success) {
-              console.log("user registered");
               navigate("/login");
             } else {
-              console.log("error while registering ", responseData);
+              toast.error(responseData.message);
+              setOtpSent(false);
+              setValue("isRegistrationStarted", false);
             }
-          } catch(error) {
+          } catch (error) {
             console.log("error while calling register user ", error);
             setOtpSent(false);
             setValue("isRegistrationStarted", false);
           }
 
         }).catch((error) => {
-            console.log("error while verifying otp ", error);
-          });
+          console.log("error while verifying otp ", error);
+        });
       }
     } catch (error) {
       console.log("error in Login handleFormSubmit -> ", error);

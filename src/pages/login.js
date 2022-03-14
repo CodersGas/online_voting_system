@@ -85,7 +85,6 @@ const Login = () => {
           delete payload.isVerificationStarted;
           try {
             const response = await AUTH_SERVICE.login(data);
-            console.log('login response ', response);
             if (response.success) {
               const userInfo = {
                 "details": {
@@ -110,13 +109,14 @@ const Login = () => {
               }
               toast.success("Logged in successfully");
             } else {
-              console.log("error in login ", response);
               setOtpSent(false);
               setValue("isVerificationStarted", false);
               toast.error(response.message);
             }
           } catch (error) {
             console.log("error while logging in ", error);
+            setOtpSent(false);
+            setValue("isVerificationStarted", false);
           }
         })
       }
