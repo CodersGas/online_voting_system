@@ -8,7 +8,7 @@ export const COMMON_SERVICE = {
   "getCandidates": async(params) => {
     const configObj = {
       "method": "GET",
-      "url":  `${baseUrl}/`,
+      "url":  `${baseUrl}candidates`,
       "headers": {
         "Content-Type": "application/json",
         "Accept": "application/json",
@@ -21,7 +21,7 @@ export const COMMON_SERVICE = {
   "getVoters": async(params) => {
     const configObj = {
       "method": "GET",
-      "url":  `${baseUrl}/`,
+      "url":  `${baseUrl}voters`,
       "headers": {
         "Content-Type": "application/json",
         "Accept": "application/json",
@@ -35,7 +35,7 @@ export const COMMON_SERVICE = {
   "getParties": async(params) => {
     const configObj = {
       "method": "GET",
-      "url":  `${baseUrl}/`,
+      "url":  `${baseUrl}parties`,
       "headers": {
         "Content-Type": "application/json",
         "Accept": "application/json",
@@ -49,7 +49,7 @@ export const COMMON_SERVICE = {
   "getPositions": async(params) => {
     const configObj = {
       "method": "GET",
-      "url":  `${baseUrl}/`,
+      "url":  `${baseUrl}positions`,
       "headers": {
         "Content-Type": "application/json",
         "Accept": "application/json",

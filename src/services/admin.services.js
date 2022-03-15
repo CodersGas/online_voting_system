@@ -5,10 +5,10 @@ import { getToken } from "../helpers/common.helpers";
 let data = null;
 
 export const ADMIN_SERVICE = {
-  "addEditCandidate": async(params) => {
+  "addCandidate": async(params) => {
     const configObj = {
       "method": "POST",
-      "url":  `${baseUrl}/`,
+      "url":  `${baseUrl}admin/candidate`,
       "data": params,
       "headers": {
         "Content-Type": "application/json",
@@ -53,7 +53,7 @@ export const ADMIN_SERVICE = {
   "addParty": async(params) => {
     const configObj = {
       "method": "POST",
-      "url":  `${baseUrl}/`,
+      "url":  `${baseUrl}admin/party`,
       "data": params,
       "headers": {
         "Content-Type": "application/json",
@@ -124,5 +124,50 @@ export const ADMIN_SERVICE = {
 
     data = await callAPI(configObj);
     return data; 
-  }
+  },
+  "addPosition": async(params) => {
+    const configObj = {
+      "method": "POST",
+      "url":  `${baseUrl}admin/position`,
+      "data": params,
+      "headers": {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": `Bearer ${getToken()}`
+      }
+    };
+
+    data = await callAPI(configObj);
+    return data;
+  },
+  "editPosition": async(params) => {
+    const configObj = {
+      "method": "POST",
+      "url":  `${baseUrl}/`,
+      "data": params,
+      "headers": {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": `Bearer ${getToken()}`
+      }
+    };
+
+    data = await callAPI(configObj);
+    return data;
+  },
+  "deletePosition": async(params) => {
+    const configObj = {
+      "method": "DELETE",
+      "url":  `${baseUrl}/`,
+      "data": params,
+      "headers": {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": `Bearer ${getToken()}`
+      }
+    };
+
+    data = await callAPI(configObj);
+    return data;
+  },
 };

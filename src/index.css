@@ -196,6 +196,7 @@ a {
   background-color: #fff;
   padding: 2rem;
   width: 50%;
+  overflow-y: auto;
 }
 .modalTitleDiv,
 .modalActionsDiv {
@@ -390,6 +391,17 @@ a {
 .loginRegisterProgressColor {
   color: #fff !important;
   font-size: 1.5rem !important;
+}
+.errorText {
+  color: #f44336;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.previewImage {
+  width: 100%;
+}
+.text-center {
+  text-align: center;
 }
 
 .bootstrapContainer {

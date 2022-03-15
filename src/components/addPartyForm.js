@@ -6,6 +6,7 @@ import { Grid, Typography, TextField, Button, CircularProgress } from "@mui/mate
 import useGlobalState from '../store';
 import { setPartiesData } from "../store/actions";
 import { ADMIN_SERVICE } from "../services/admin.services";
+import { toast } from "react-toastify";
 
 const ValidationSchema = yup.object().shape({
   name: yup.string().required("Please enter party name")
@@ -46,13 +47,15 @@ const AddPartyForm = ({
       // TODO:: change service depending on action type
       const resposneData = await ADMIN_SERVICE.addParty(data);
 
-      if(resposneData.status === "success") {
-        // TODO:: refetch the data. Just Call fetchData()
+      if(resposneData.success) {
+        fetchData();
         dispatch(setPartiesData({
           parties: [...parties, data] 
         }));
+        toast.success("Party added");
       }else {
         console.log("error while adding partiy ", resposneData);
+        toast.error(resposneData.message);
       }
       onClose();
     } catch (error) {

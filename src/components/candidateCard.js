@@ -13,7 +13,9 @@ const CandidateCard = ({ data }) => {
       alreadyVoted,
       user: {
         isLoggedIn
-      }
+      },
+      parties,
+      positions
     },
     dispatch
   } = useGlobalState();
@@ -43,8 +45,8 @@ const CandidateCard = ({ data }) => {
       <div className="cardContainer" >
         <div className="photoNameDiv" >
           <Avatar
-            src=""
-            alt=""
+            src={data.img}
+            alt={data.name}
             className="candidateAvatar"
           />
           <p>
@@ -59,7 +61,7 @@ const CandidateCard = ({ data }) => {
             </p>
 
             <p className="partyName" >
-              {data.party}
+              { parties.filter(party => party._id == data.party)[0]["name"] }
             </p>
           </div>
 
@@ -69,7 +71,7 @@ const CandidateCard = ({ data }) => {
             </p>
 
             <p className="positionName">
-              {data.position}
+              { positions.filter(position => position._id === data.position)[0]["name"] }
             </p>
           </div>
         </div>

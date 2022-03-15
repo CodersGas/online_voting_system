@@ -6,6 +6,7 @@ import { Grid, Typography, TextField, Button, CircularProgress } from "@mui/mate
 import useGlobalState from '../store';
 import { setPositionsData } from "../store/actions";
 import { ADMIN_SERVICE } from "../services/admin.services";
+import { toast } from "react-toastify";
 
 const ValidationSchema = yup.object().shape({
   name: yup.string().required("Please enter party name")
@@ -21,7 +22,6 @@ const AddPositionForm = ({
   const {
     control,
     handleSubmit,
-    setValue,
     reset
   } = useForm({
     resolver: yupResolver(ValidationSchema)
@@ -44,15 +44,17 @@ const AddPositionForm = ({
       }));
 
       // TODO:: change service depending on action type
-      const resposneData = await ADMIN_SERVICE.addParty(data);
+      const resposneData = await ADMIN_SERVICE.addPosition(data);
 
-      if(resposneData.status === "success") {
-        // TODO:: refetch the data. Just Call fetchData()
+      if(resposneData.success) {
+        fetchData()
         dispatch(setPositionsData({
           positions: [...positions, data] 
         }));
+        toast.success("Position addedd");
       }else {
         console.log("error while adding partiy ", resposneData);
+        toast.error(resposneData.message)
       }
       onClose();
     } catch (error) {

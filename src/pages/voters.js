@@ -9,14 +9,6 @@ import { setVotersData } from "../store/actions";
 
 const voterHeader = ["S.no", "Name", "Email", "Phone", "Actions"];
 
-const dummyVoter = [
-  {
-    "name": 'Ashish',
-    "phone": "9958750734",
-    "email": "abc@gmail.com"
-  }
-]
-
 const Voters = () => {
   const {
     state: {
@@ -61,7 +53,7 @@ const Voters = () => {
             <div className="lowerContentDiv" >
               <TableComponent
                 headerArray={voterHeader}
-                dataArray={dummyVoter} // TODO:: replace dataArray param
+                dataArray={voters}
                 modalTitle=""
                 fetchData={null}
                 canEdit={false}

@@ -19,6 +19,12 @@ const Pages = () => {
   useEffect(() => {
     if (!isLoggedIn) {
       navigate("/home");
+    }else {
+      if(details && details.role === "admin") {
+        navigate("/")
+      }else {
+        navigate("/home");
+      }
     }
   }, []);
 

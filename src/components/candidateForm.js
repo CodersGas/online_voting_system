@@ -6,6 +6,8 @@ import { Grid, Typography, TextField, MenuItem, Button, CircularProgress } from 
 import useGlobalState from '../store';
 import { setCandidatesData } from "../store/actions";
 import { ADMIN_SERVICE } from "../services/admin.services";
+import ImageDropzone from "./imageDropzone";
+import { toast } from "react-toastify";
 
 const ValidationSchema = yup.object().shape({
   name: yup.string().required("Please enter name"),
@@ -14,30 +16,6 @@ const ValidationSchema = yup.object().shape({
   position: yup.string().required("Please select position"),
   party: yup.string().required("Please select party")
 });
-
-const dummyParties = [
-  {
-    "key": 1,
-    "value": 1,
-    "name": "BJP"
-  }, {
-    "key": 2,
-    "value": 2,
-    "name": "AAP"
-  },
-];
-
-const dummyPositions = [
-  {
-    "key": 1,
-    "value": 1,
-    "name": "MLA"
-  }, {
-    "key": 2,
-    "value": 2,
-    "name": "MP"
-  },
-];
 
 
 const CandidateForm = ({
@@ -58,30 +36,42 @@ const CandidateForm = ({
 
   const {
     state: {
-      candidates
+      candidates,
+      parties,
+      positions
     },
     dispatch
   } = useGlobalState();
 
   const [loading, setLoading] = useState(false);
 
+  const updateFile = (incomingFile) => setFile(incomingFile);
+  const [previewImg, setPreviewImg] = useState(null);
+  const [file, setFile] = useState(undefined);
+
   const handleFormSubmit = async (data) => {
     try {
       setLoading(true);
-      dispatch(setCandidatesData({
-        candidates: [...candidates, data] 
-      }));
-
+      const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("email", data.email);
+      formData.append("bio", data.bio);
+      formData.append("position", data.position);
+      formData.append("party", data.party);
+      formData.append("file", file);
+      formData.append("role", "candidate");
       // TODO:: change service depending on action type
-      const resposneData = await ADMIN_SERVICE.addCandidate(data);
+      const resposneData = await ADMIN_SERVICE.addCandidate(formData);
 
-      if(resposneData.status === "success") {
-        // TODO:: refetch the data. Just Call fetchData()
+      if (resposneData.success) {
+        fetchData();
         dispatch(setCandidatesData({
-          candidates: [...candidates, data] 
+          candidates: [...candidates, data]
         }));
-      }else {
+        toast.success("Candidate addedd successfully");
+      } else {
         console.log("error while adding candidate ", resposneData);
+        toast.success(resposneData.message);
       }
       onClose();
     } catch (error) {
@@ -91,8 +81,8 @@ const CandidateForm = ({
   }
 
   useEffect(() => {
-    if(actionType === "edit") {
-      reset(editData); 
+    if (actionType === "edit") {
+      reset(editData);
     }
   }, []);
 
@@ -101,6 +91,14 @@ const CandidateForm = ({
       onSubmit={handleSubmit(handleFormSubmit)}
     >
       <Grid conatiner >
+        <Grid item md={12} xs={12} sm={12} >
+          <Grid container justifyContent="center" >
+            <Grid item md={6} xs={12} sm={12} >
+              <ImageDropzone updateFile={updateFile} previewImg={previewImg} />
+            </Grid>
+          </Grid>
+        </Grid>
+
         <Grid item md={12} xs={12} sm={12} >
           <Typography className="formLabel" >
             Name
@@ -198,8 +196,8 @@ const CandidateForm = ({
                 label="Position"
               >
                 {
-                  dummyPositions.map((position) => (
-                    <MenuItem key={position.key} value={position.value} >
+                  positions.map((position) => (
+                    <MenuItem key={position._id} value={position._id} >
                       {position.name}
                     </MenuItem>
                   ))
@@ -232,8 +230,8 @@ const CandidateForm = ({
                 label="Party"
               >
                 {
-                  dummyParties.map((party) => (
-                    <MenuItem key={party.key} value={party.value}>
+                  parties.map((party) => (
+                    <MenuItem key={party._id} value={party._id}>
                       {party.name}
                     </MenuItem>
                   ))
