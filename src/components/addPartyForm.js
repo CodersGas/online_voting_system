@@ -41,14 +41,14 @@ const AddPartyForm = ({
     try {
       setLoading(true);
       // TODO:: change service depending on action type
-      const resposneData = await ADMIN_SERVICE.addParty(data);
+      const resposneData =  actionType === "edit" ? await ADMIN_SERVICE.editParty({...data, "dataId": editData._id}) : await ADMIN_SERVICE.addParty(data);
 
       if(resposneData.success) {
         fetchData();
         dispatch(setPartiesData({
           parties: [...parties, data] 
         }));
-        toast.success("Party added");
+        toast.success(`Party ${ actionType === "edit" ? "updated" : "added"}`);
       }else {
         console.log("error while adding partiy ", resposneData);
         toast.error(resposneData.message);

@@ -9,6 +9,7 @@ import useGlobalState from "../store";
 import TableComponent from "../components/table";
 import { COMMON_SERVICE } from "../services/common.services";
 import { setPartiesData } from "../store/actions";
+import Loader from "../components/loader";
 
 const partiesHeader = ["S.no", "Name", "Actions"];
 
@@ -22,11 +23,13 @@ const Parties = () => {
   } = useGlobalState();
 
   const [openModal, setOpenModal] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleModal = () => setOpenModal(!openModal);
 
   const getAllParties = async () => {
     try {
+      setLoading(true);
       const responseData = await COMMON_SERVICE.getParties();
 
       if (responseData.success) {
@@ -37,6 +40,7 @@ const Parties = () => {
     } catch (error) {
       console.log("error in getAllParties ", error);
     }
+    setLoading(false);
   }
 
   useEffect(() => {
@@ -63,14 +67,19 @@ const Parties = () => {
             </div>
 
             <div className="lowerContentDiv" >
-              <TableComponent
-                headerArray={partiesHeader}
-                dataArray={parties}
-                modalTitle="Edit Party"
-                fetchData={getAllParties}
-                canEdit={true}
-                canDelete={true}
-              />
+              {
+                loading ?
+                <Loader />
+                :
+                <TableComponent
+                  headerArray={partiesHeader}
+                  dataArray={parties}
+                  modalTitle="Edit Party"
+                  fetchData={getAllParties}
+                  canEdit={true}
+                  canDelete={true}
+                />
+              }
             </div>
           </div>
         </Grid>

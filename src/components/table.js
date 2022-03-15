@@ -8,6 +8,7 @@ import { ADMIN_SERVICE } from "../services/admin.services";
 import { useLocation } from "react-router-dom";
 import AddPartyForm from "./addPartyForm";
 import AddPositionForm from "./addPositionForm";
+import { toast } from "react-toastify";
 
 const TableComponent = ({
   headerArray,
@@ -33,12 +34,23 @@ const TableComponent = ({
     try {
       setLoading(true);
       // TODO:: change service according to pathname here
-      const responseData = await ADMIN_SERVICE.deleteCandidate({ "id": id });
+      let responseData = null;
+      if(pathname === "/candidates") {
+        responseData = await ADMIN_SERVICE.deleteCandidate({ "dataId": id });
+      }else if(pathname === "/voters") {
+        responseData = await ADMIN_SERVICE.deleteVoter({ "dataId": id });
+      }else if(pathname === "/parties") {
+        responseData = await ADMIN_SERVICE.deleteParty({ "dataId": id });
+      }else if(pathname === "/positions") {
+        responseData = await ADMIN_SERVICE.deletePosition({ "dataId": id });
+      }
 
       if (responseData.success) {
         fetchData();
+        toast.success("Deleted successfully");
       } else {
         console.log("Unable to delete right now ", responseData);
+        toast.error(responseData.message);
       }
     } catch (error) {
       console.log("error in handleDeleteData of Table ", error);
@@ -86,7 +98,7 @@ const TableComponent = ({
 
                     {
                       canDelete &&
-                      <IconButton disabled={loading} onClick={() => handleDeleteData(row.id)} >
+                      <IconButton disabled={loading} onClick={() => handleDeleteData(row._id)} >
                         <DeleteIcon className="deleteIcon" />
                       </IconButton>
                     }
@@ -121,7 +133,7 @@ const TableComponent = ({
 
                     {
                       canDelete &&
-                      <IconButton disabled={loading} onClick={() => handleDeleteData(row.id)} >
+                      <IconButton disabled={loading} onClick={() => handleDeleteData(row._id)} >
                         <DeleteIcon className="deleteIcon" />
                       </IconButton>
                     }
@@ -154,7 +166,7 @@ const TableComponent = ({
 
                     {
                       canDelete &&
-                      <IconButton disabled={loading} onClick={() => handleDeleteData(row.id)} >
+                      <IconButton disabled={loading} onClick={() => handleDeleteData(row._id)} >
                         <DeleteIcon className="deleteIcon" />
                       </IconButton>
                     }
@@ -187,7 +199,7 @@ const TableComponent = ({
 
                     {
                       canDelete &&
-                      <IconButton disabled={loading} onClick={() => handleDeleteData(row.id)} >
+                      <IconButton disabled={loading} onClick={() => handleDeleteData(row._id)} >
                         <DeleteIcon className="deleteIcon" />
                       </IconButton>
                     }
@@ -206,6 +218,7 @@ const TableComponent = ({
           title={modalTitle}
           actionType="edit"
           editData={editData}
+          fetchData={fetchData}
         >
           {
             pathname === "/candidates" ?

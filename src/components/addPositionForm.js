@@ -40,14 +40,14 @@ const AddPositionForm = ({
     try {
       setLoading(true);
       // TODO:: change service depending on action type
-      const resposneData = await ADMIN_SERVICE.addPosition(data);
+      const resposneData = actionType === "edit" ? await ADMIN_SERVICE.editPosition({...data, dataId: editData._id}) : await ADMIN_SERVICE.addPosition(data);
 
       if(resposneData.success) {
         fetchData()
         dispatch(setPositionsData({
           positions: [...positions, data] 
         }));
-        toast.success("Position addedd");
+        toast.success(`Position ${actionType === "edit" ? "updated" : "added"}`);
       }else {
         console.log("error while adding partiy ", resposneData);
         toast.error(resposneData.message)

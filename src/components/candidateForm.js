@@ -58,20 +58,30 @@ const CandidateForm = ({
       formData.append("bio", data.bio);
       formData.append("position", data.position);
       formData.append("party", data.party);
-      formData.append("file", file);
       formData.append("role", "candidate");
       // TODO:: change service depending on action type
-      const resposneData = await ADMIN_SERVICE.addCandidate(formData);
+      if(actionType === "edit") {
+        if(file) {
+          formData.append("file", file);
+        }else {
+          formData.append("file", editData.img);
+        }
+        formData.append("dataId", editData._id);
+      }else {
+        formData.append("file", file);
+      }
+
+      const resposneData = actionType === "edit" ? await ADMIN_SERVICE.editCandidate(formData) : await ADMIN_SERVICE.addCandidate(formData);
 
       if (resposneData.success) {
         fetchData();
         dispatch(setCandidatesData({
           candidates: [...candidates, data]
         }));
-        toast.success("Candidate addedd successfully");
+        toast.success(`Candidate ${actionType === "edit" ? "updated" : "added"} successfully`);
       } else {
         console.log("error while adding candidate ", resposneData);
-        toast.success(resposneData.message);
+        toast.error(resposneData.message);
       }
       onClose();
     } catch (error) {
@@ -83,6 +93,7 @@ const CandidateForm = ({
   useEffect(() => {
     if (actionType === "edit") {
       reset(editData);
+      setPreviewImg(editData.img)
     }
   }, []);
 

@@ -23,7 +23,7 @@ export const ADMIN_SERVICE = {
   "editCandidate": async(params) => {
     const configObj = {
       "method": "POST",
-      "url":  `${baseUrl}/`,
+      "url":  `${baseUrl}admin/editCandidate`,
       "data": params,
       "headers": {
         "Content-Type": "application/json",
@@ -38,7 +38,7 @@ export const ADMIN_SERVICE = {
   "deleteCandidate": async(params) => {
     const configObj = {
       "method": "DELETE",
-      "url":  `${baseUrl}/`,
+      "url":  `${baseUrl}admin/deleteCandidate`,
       "data": params,
       "headers": {
         "Content-Type": "application/json",
@@ -68,7 +68,7 @@ export const ADMIN_SERVICE = {
   "editParty": async(params) => {
     const configObj = {
       "method": "POST",
-      "url":  `${baseUrl}/`,
+      "url":  `${baseUrl}admin/editParty`,
       "data": params,
       "headers": {
         "Content-Type": "application/json",
@@ -83,7 +83,7 @@ export const ADMIN_SERVICE = {
   "deleteParty": async(params) => {
     const configObj = {
       "method": "DELETE",
-      "url":  `${baseUrl}/`,
+      "url":  `${baseUrl}admin/deleteParty`,
       "data": params,
       "headers": {
         "Content-Type": "application/json",
@@ -143,7 +143,7 @@ export const ADMIN_SERVICE = {
   "editPosition": async(params) => {
     const configObj = {
       "method": "POST",
-      "url":  `${baseUrl}/`,
+      "url":  `${baseUrl}admin/editPosition`,
       "data": params,
       "headers": {
         "Content-Type": "application/json",
@@ -158,7 +158,22 @@ export const ADMIN_SERVICE = {
   "deletePosition": async(params) => {
     const configObj = {
       "method": "DELETE",
-      "url":  `${baseUrl}/`,
+      "url":  `${baseUrl}admin/deletePosition`,
+      "data": params,
+      "headers": {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": `Bearer ${getToken()}`
+      }
+    };
+
+    data = await callAPI(configObj);
+    return data;
+  },
+  "deleteVoter": async(params) => {
+    const configObj = {
+      "method": "DELETE",
+      "url":  `${baseUrl}admin/deleteVoter`,
       "data": params,
       "headers": {
         "Content-Type": "application/json",

@@ -398,7 +398,8 @@ a {
   font-weight: 600;
 }
 .previewImage {
-  width: 100%;
+  width: 200px;
+  height: 200px;
 }
 .text-center {
   text-align: center;

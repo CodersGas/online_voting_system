@@ -6,6 +6,7 @@ import useGlobalState from "../store";
 import TableComponent from "../components/table";
 import { COMMON_SERVICE } from "../services/common.services";
 import { setVotersData } from "../store/actions";
+import Loader from "../components/loader";
 
 const voterHeader = ["S.no", "Name", "Email", "Phone", "Actions"];
 
@@ -17,8 +18,11 @@ const Voters = () => {
     dispatch
   } = useGlobalState();
 
+  const [loading, setLoading] = useState(false);
+
   const getAllVoters = async () => {
     try {
+      setLoading(true);
       const responseData = await COMMON_SERVICE.getVoters();
 
       if (responseData.success) {
@@ -29,6 +33,7 @@ const Voters = () => {
     } catch (error) {
       console.log("error in getAllVoters ", error);
     }
+    setLoading(false);
   }
 
   useEffect(() => {
@@ -51,14 +56,19 @@ const Voters = () => {
             </div>
 
             <div className="lowerContentDiv" >
-              <TableComponent
-                headerArray={voterHeader}
-                dataArray={voters}
-                modalTitle=""
-                fetchData={null}
-                canEdit={false}
-                canDelete={true}
-              />
+              {
+                loading ?
+                <Loader />
+                :
+                <TableComponent
+                  headerArray={voterHeader}
+                  dataArray={voters}
+                  modalTitle=""
+                  fetchData={getAllVoters}
+                  canEdit={false}
+                  canDelete={true}
+                />
+              }
             </div>
           </div>
         </Grid>
