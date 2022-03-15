@@ -9,6 +9,7 @@ import useGlobalState from "../store";
 import TableComponent from "../components/table";
 import { COMMON_SERVICE } from "../services/common.services";
 import { setCandidatesData } from "../store/actions";
+import Loader from "../components/loader";
 
 const candidateHeader = ["S.no", "Name", "Email", "Position", "Party", "Bio", "Actions"];
 
@@ -22,19 +23,20 @@ const Candidates = () => {
   } = useGlobalState();
 
   const [openModal, setOpenModal] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleModal = () => setOpenModal(!openModal);
 
-  const getAllCandidates = async() => {
-    try{
+  const getAllCandidates = async () => {
+    try {
       const responseData = await COMMON_SERVICE.getCandidates();
 
-      if(responseData.success) {
+      if (responseData.success) {
         dispatch(setCandidatesData({
           candidates: [...responseData.data]
         }));
       }
-    }catch(error) {
+    } catch (error) {
       console.log("error in getAllCandidates ", error);
     }
   }
@@ -63,14 +65,19 @@ const Candidates = () => {
             </div>
 
             <div className="lowerContentDiv" >
-              <TableComponent 
-                headerArray={candidateHeader}
-                dataArray={candidates}
-                modalTitle="Edit Candidate"
-                fetchData={getAllCandidates}
-                canEdit={true}
-                canDelete={true}
-              />
+              {
+                loading ?
+                <Loader />
+                :
+                <TableComponent
+                  headerArray={candidateHeader}
+                  dataArray={candidates}
+                  modalTitle="Edit Candidate"
+                  fetchData={getAllCandidates}
+                  canEdit={true}
+                  canDelete={true}
+                />
+              }
             </div>
           </div>
         </Grid>
