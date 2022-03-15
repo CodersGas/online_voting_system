@@ -9,6 +9,7 @@ import { useLocation } from "react-router-dom";
 import AddPartyForm from "./addPartyForm";
 import AddPositionForm from "./addPositionForm";
 import { toast } from "react-toastify";
+import useGlobalState from "../store";
 
 const TableComponent = ({
   headerArray,
@@ -20,6 +21,13 @@ const TableComponent = ({
 }) => {
 
   const { pathname } = useLocation();
+
+  const {
+    state: {
+      parties,
+      positions
+    }
+  } = useGlobalState();
 
   const [openEditModal, setOpenEditModal] = useState(false);
   const [editData, setEditData] = useState(null);
@@ -84,8 +92,23 @@ const TableComponent = ({
                   {row.name}
                 </TableCell>
                 <TableCell align="left">{row.email}</TableCell>
-                <TableCell align="left">{row.position}</TableCell>
-                <TableCell align="left">{row.party}</TableCell>
+                <TableCell align="left">
+                  {
+                    positions.length > 0 ?
+                    positions.filter(position => position._id === row.position)[0]["name"]
+                    :
+                    "-"
+                  }
+                </TableCell>
+                <TableCell align="left">
+                  {
+                    parties.length > 0
+                    ?
+                    parties.filter(party => party._id === row.party)[0]["name"]
+                    :
+                    "-"
+                  }
+                </TableCell>
                 <TableCell align="left">{row.bio}</TableCell>
                 <TableCell align="left">
                   <div className="tableActionsDiv" >
