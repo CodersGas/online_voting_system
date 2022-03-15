@@ -9,7 +9,7 @@ import { ADMIN_SERVICE } from "../services/admin.services";
 import { toast } from "react-toastify";
 
 const ValidationSchema = yup.object().shape({
-  name: yup.string().required("Please enter party name")
+  name: yup.string().required("Please enter position name")
 });
 
 const AddPositionForm = ({
@@ -39,10 +39,6 @@ const AddPositionForm = ({
   const handleFormSubmit = async (data) => {
     try {
       setLoading(true);
-      dispatch(setPositionsData({
-        positions: [...positions, data] 
-      }));
-
       // TODO:: change service depending on action type
       const resposneData = await ADMIN_SERVICE.addPosition(data);
 

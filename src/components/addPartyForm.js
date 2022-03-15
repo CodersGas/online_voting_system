@@ -40,10 +40,6 @@ const AddPartyForm = ({
   const handleFormSubmit = async (data) => {
     try {
       setLoading(true);
-      dispatch(setPartiesData({
-        parties: [...parties, data] 
-      }));
-
       // TODO:: change service depending on action type
       const resposneData = await ADMIN_SERVICE.addParty(data);
 

@@ -60,9 +60,14 @@ const CandidateCard = ({ data }) => {
               Party
             </p>
 
-            <p className="partyName" >
-              { parties.filter(party => party._id == data.party)[0]["name"] }
-            </p>
+            {
+              parties.length > 0 ?
+                <p className="partyName" >
+                  {parties.filter(party => party._id == data.party)[0]["name"]}
+                </p>
+                :
+                "-"
+            }
           </div>
 
           <div className="positionInfoDiv" >
@@ -70,9 +75,14 @@ const CandidateCard = ({ data }) => {
               Position
             </p>
 
-            <p className="positionName">
-              { positions.filter(position => position._id === data.position)[0]["name"] }
-            </p>
+            {
+              positions.length > 0 ?
+              <p className="positionName">
+                {positions.filter(position => position._id === data.position)[0]["name"]}
+              </p>
+              :
+              "-"
+            }
           </div>
         </div>
 
