@@ -4,10 +4,11 @@ import Tooltip from "@mui/material/Tooltip";
 import IconButton from '@mui/material/IconButton';
 import useGlobalState from '../store';
 import { logoutUser } from '../store/actions';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import Drawer from '@mui/material/Drawer';
 import AdminMenu from "./adminMenu";
+import HomeIcon from '@mui/icons-material/Home';
 
 const Navigation = () => {
 
@@ -22,6 +23,7 @@ const Navigation = () => {
   } = useGlobalState();
 
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const [openNav, setOpenNav] = useState(false);
 
@@ -34,7 +36,7 @@ const Navigation = () => {
 
   return (
     <>
-      <div className='navigationBar' >
+      <div className={(pathname === "/login" || pathname === "/register") ? 'loggedOutNavBar' : 'navigationBar'} >
         {
           isLoggedIn ?
             <div className="leftMenu" >
@@ -51,6 +53,16 @@ const Navigation = () => {
         }
 
         {
+          (pathname === "/login" || pathname === "/register") && !isLoggedIn &&
+          <div className="loggedOutLeftMenu" >
+            <HomeIcon />
+            <Link to="/home" >
+              Home
+            </Link>
+          </div>
+        }
+
+        {
           isLoggedIn ?
             <div className="rightNav" >
               <p className="navigationTitle" >Hi, {details.name} 👋</p>
@@ -64,7 +76,10 @@ const Navigation = () => {
               </Tooltip>
             </div>
             :
-            <Link to="/login" className="logintext" >Login</Link>
+            pathname !== "/login" ?
+              <Link to="/login" className="logintext" >Login</Link>
+              :
+              null
         }
       </div >
 

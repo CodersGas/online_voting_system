@@ -69,7 +69,6 @@ const Layout = ({ children }) => {
   return (
     <div className="layoutDiv" >
       {
-        location.pathname !== "/login" && location.pathname !== "/register" &&
         <Navigation />
       }
       { children }

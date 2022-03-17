@@ -411,6 +411,25 @@ a {
   align-items: center;
   justify-content: center;
 }
+.loggedOutNavBar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 2rem;
+  padding: 1rem;
+  color: #fff;
+}
+.loggedOutLeftMenu {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.loggedOutNavBar .logintext,
+.loggedOutNavBar a {
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
 
 .bootstrapContainer {
   margin: 0 auto;
