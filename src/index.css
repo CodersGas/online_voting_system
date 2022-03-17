@@ -197,6 +197,7 @@ a {
   padding: 2rem;
   width: 50%;
   overflow-y: auto;
+  height: 90vh;
 }
 .modalTitleDiv,
 .modalActionsDiv {
