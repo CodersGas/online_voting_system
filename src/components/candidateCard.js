@@ -5,6 +5,7 @@ import useGlobalState from "../store";
 import Button from "@mui/material/Button";
 import { COMMON_SERVICE } from "../services/common.services";
 import { updateVotedState } from "../store/actions";
+import { toast } from "react-toastify";
 
 const CandidateCard = ({ data }) => {
 
@@ -12,7 +13,8 @@ const CandidateCard = ({ data }) => {
     state: {
       alreadyVoted,
       user: {
-        isLoggedIn
+        isLoggedIn,
+        details
       },
       parties,
       positions
@@ -25,11 +27,19 @@ const CandidateCard = ({ data }) => {
   const handleCastVote = async () => {
     try {
       setLoading(true);
-      const responseData = await COMMON_SERVICE.castVote({ "partyId": data.partyId });
-
-      if (responseData.success) {
-        console.log("vote cased successfully");
-
+      const responseData = await COMMON_SERVICE.castVote({ "partyId": data.party });
+      if(responseData.success) {
+        const updateVotedStatus = await COMMON_SERVICE.updateHasAlreadyVoted({ "userId": details.userId });
+        if(updateVotedStatus.success) {
+          dispatch(updateVotedState({
+            alreadyVoted: true
+          }));
+          toast.success("Vote successfully added");
+        }else {
+          console.log("error in updating vote status ", updateVotedStatus);
+        }
+      }else {
+        console.log("error while adding vote ", responseData);
       }
     } catch (error) {
       console.log("error while casting vote ", error);
@@ -100,7 +110,7 @@ const CandidateCard = ({ data }) => {
                 null
                 :
                 <div className="voteButtonDiv" >
-                  <Button onClick={handleCastVote} variant="outlined" className="addUserButton voteButton" >
+                  <Button onClick={handleCastVote} variant="outlined" className="addUserButton voteButton" disabled={loading} >
                     Vote
                   </Button>
                 </div>

@@ -11,6 +11,10 @@ const Layout = ({ children }) => {
 
   const {
     state: {
+      user: {
+        isLoggedIn,
+        details
+      },
       parties,
       positions,
     },
@@ -47,6 +51,20 @@ const Layout = ({ children }) => {
     }
   }
 
+  const getHasAlreadyVoted = async() => {
+    try {
+      const responseData = await COMMON_SERVICE.getHasAlreadyVoted({ "userId": details.userId });
+
+      if (responseData.success) {
+        dispatch(setPositionsData({
+          alreadyVoted: responseData.data.hasAlreadyVoted
+        }));
+      }
+    } catch (error) {
+      console.log("error in getHasAlreadyVoted ", error);
+    } 
+  }
+
   useEffect(() => {
     if (location.pathname === "/login" || location.pathname === "/register") {
       document.body.classList.add("animatedBackground");
@@ -56,6 +74,10 @@ const Layout = ({ children }) => {
       }, auth);
     }else {
       document.body.classList.remove("animatedBackground");
+    }
+
+    if(isLoggedIn && details.role === "user") {
+      getHasAlreadyVoted(); 
     }
   }, [location]);
 

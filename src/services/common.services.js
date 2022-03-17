@@ -63,7 +63,37 @@ export const COMMON_SERVICE = {
   "castVote": async(params) => {
     const configObj = {
       "method": "POST",
-      "url":  `${baseUrl}/`,
+      "url":  `${baseUrl}addVote`,
+      "data": params,
+      "headers": {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": `Bearer ${getToken()}`
+      }
+    };
+
+    data = await callAPI(configObj);
+    return data;
+  },
+  "updateHasAlreadyVoted": async(params) => {
+    const configObj = {
+      "method": "POST",
+      "url":  `${baseUrl}updateHasAlreadyVoted`,
+      "data": params,
+      "headers": {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": `Bearer ${getToken()}`
+      }
+    };
+
+    data = await callAPI(configObj);
+    return data;
+  },
+  "getHasAlreadyVoted": async(params) => {
+    const configObj = {
+      "method": "GET",
+      "url":  `${baseUrl}getHasAlreadyVoted?userId=${params.userId}`,
       "headers": {
         "Content-Type": "application/json",
         "Accept": "application/json",
