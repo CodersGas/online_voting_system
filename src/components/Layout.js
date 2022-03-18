@@ -119,7 +119,7 @@ const Layout = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (pusher) {
+    if (pusher && details) {
       let channel = pusher.subscribe('voting');
       channel.bind("voted_added", function (data) {
         let temp = [...parties];
@@ -140,6 +140,7 @@ const Layout = ({ children }) => {
           timeCount: parseFloat(data.votingTimeLeft)
         }));
 
+        console.log("details in pusher ", details);
         if ((!details) || (details && details.role !== "admin")) {
           if (data.votingTimeLeft === 0) {
             navigate("/results");
@@ -147,7 +148,7 @@ const Layout = ({ children }) => {
         }
       });
     }
-  }, [pusher]);
+  }, [pusher, details]);
 
   return (
     <div className="layoutDiv" >
