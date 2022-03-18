@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Navigation from "./Navigation";
 import { RecaptchaVerifier } from "firebase/auth";
 import { auth } from "../config/firebase.config";
@@ -22,6 +22,7 @@ const Layout = ({ children }) => {
   } = useGlobalState();
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   const [pusher, setPusher] = useState(null);
 
@@ -98,12 +99,12 @@ const Layout = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if(pusher) {
+    if (pusher) {
       let channel = pusher.subscribe('voting');
-      channel.bind("voted_added", function(data) {
+      channel.bind("voted_added", function (data) {
         let temp = [...parties];
         temp.map((party, _) => {
-          if(party._id === data.partyId) {
+          if (party._id === data.partyId) {
             party.votes = party.votes + 1;
           }
         });
@@ -113,11 +114,17 @@ const Layout = ({ children }) => {
         }));
       });
 
-      channel.bind("voting_status", function(data) {
+      channel.bind("voting_status", function (data) {
         dispatch(updateTimeState({
           timeStarted: data.isVotingStarted,
           timeCount: parseFloat(data.votingTimeLeft)
         }));
+
+        if ((!details) || (details && details.role !== "admin")) {
+          if (data.votingTimeLeft === 0) {
+            navigate("/results");
+          }
+        }
       });
     }
   }, [pusher]);

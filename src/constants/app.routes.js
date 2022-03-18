@@ -11,6 +11,7 @@ import Parties from "../pages/parties";
 import Positions from "../pages/positions";
 import Register from "../pages/register";
 import PublicHomePage from "../pages/publicHomePage";
+import ElectionResult from "../pages/result";
 
 export const AppRoutes = {
   ADMIN: [
@@ -64,6 +65,11 @@ export const AppRoutes = {
       path: PUBLIC_ROUTES.home,
       exact: true,
       element: <PublicHomePage />
+    },
+    {
+      path: PUBLIC_ROUTES.results,
+      exact: true,
+      element: <ElectionResult />
     }
   ],
 };
