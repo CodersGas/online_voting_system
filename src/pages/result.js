@@ -23,7 +23,7 @@ const ElectionResult = () => {
       winner.party = party.name;
     };
 
-    if(party.votes > 0 && winner.votes > 0 && party.votes === winner.votes) {
+    if(party.votes > 0 && winner.votes > 0 && party.votes === winner.votes && party.name !== winner.party) {
       secondParty = party.name;
     }
   });

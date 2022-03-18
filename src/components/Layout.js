@@ -81,7 +81,8 @@ const Layout = ({ children }) => {
       const responseData = await COMMON_SERVICE.getVotingStatus();
       if (responseData.success) {
         dispatch(updateTimeState({
-          timeStarted: responseData.isVotingStarted
+          timeStarted: responseData.isVotingStarted,
+          timeCount: responseData.votingTime
         }));
 
         if (responseData.isVotingStarted) {
