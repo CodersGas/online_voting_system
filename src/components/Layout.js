@@ -6,6 +6,7 @@ import { auth } from "../config/firebase.config";
 import useGlobalState from "../store";
 import { setPartiesData, setPositionsData, updateTimeState } from "../store/actions";
 import { COMMON_SERVICE } from "../services/common.services";
+import { toast } from "react-toastify";
 
 const Layout = ({ children }) => {
 
@@ -75,6 +76,23 @@ const Layout = ({ children }) => {
     }
   }
 
+  const getVotingStatus = async () => {
+    try {
+      const responseData = await COMMON_SERVICE.getVotingStatus();
+      if (responseData.success) {
+        dispatch(updateTimeState({
+          timeStarted: responseData.isVotingStarted
+        }));
+
+        if (responseData.isVotingStarted) {
+          toast.warning("Election going on. Please wait to register");
+        }
+      }
+    } catch (error) {
+      console.log("error in getVotingStatus ", error);
+    }
+  }
+
   useEffect(() => {
     if (location.pathname === "/login" || location.pathname === "/register" || location.pathname === "/forgot-password") {
       document.body.classList.add("animatedBackground");
@@ -96,6 +114,7 @@ const Layout = ({ children }) => {
       getAllParties();
       getAllPositions();
     }
+    getVotingStatus();
   }, []);
 
   useEffect(() => {

@@ -35,10 +35,12 @@ const Login = () => {
   const {
     dispatch,
     state: {
-      user
+      user,
+      timeStarted
     }
   } = useGlobalState();
   console.log('user ', user);
+  console.log('timeStarted ', timeStarted)
 
   const {
     control,
@@ -256,9 +258,14 @@ const Login = () => {
                   Forgot Password
                 </Link>
 
-                <Link to="/register" className="registerText" >
-                  Register
-                </Link>
+                {
+                  timeStarted ?
+                  null
+                  :
+                  <Link to="/register" className="registerText" >
+                    Register
+                  </Link>
+                }
               </Box>
             </Grid>
           </form>

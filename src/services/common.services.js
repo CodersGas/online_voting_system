@@ -103,5 +103,19 @@ export const COMMON_SERVICE = {
 
     data = await callAPI(configObj);
     return data;
+  },
+  "getVotingStatus": async(params) => {
+    const configObj = {
+      "method": "GET",
+      "url":  `${baseUrl}checkVotingStatus`,
+      "headers": {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": `Bearer ${getToken()}`
+      }
+    };
+
+    data = await callAPI(configObj);
+    return data;
   }
 };

@@ -218,6 +218,7 @@ a {
   justify-content: flex-end;
   gap: 1rem;
   padding-bottom: 0;
+  flex-wrap: wrap;
 }
 .lowerContentDiv {
   margin: 1rem 0;
@@ -264,7 +265,8 @@ a {
 .timerNumber {
   font-size: 24px;
 }
-.timerButton {
+.timerButton,
+.resetVotesBtn {
   position: relative;
   display: inline-block;
   width: 277px;
@@ -283,13 +285,15 @@ a {
   letter-spacing: 0.045em;
 }
 
-.timerButton svg {
+.timerButton svg ,
+.resetVotesBtn svg{
   /* position: absolute; */
   top: 0;
   left: 0;
 }
 
-.timerButton svg rect {
+.timerButton svg rect,
+.resetVotesBtn svg rect {
   /* //stroke: #EC0033; */
   stroke-width: 4;
   stroke-dasharray: 353, 0;
@@ -297,7 +301,8 @@ a {
   -webkit-transition: all 600ms ease;
   transition: all 600ms ease;
 }
-.timerButton span {
+.timerButton span,
+.resetVotesBtn span {
   background: rgb(255,130,130);
   background: -moz-linear-gradient(left,  rgba(255,130,130,1) 0%, rgba(225,120,237,1) 100%);
   background: -webkit-linear-gradient(left,  rgba(255,130,130,1) 0%,rgba(225,120,237,1) 100%);
@@ -306,7 +311,8 @@ a {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-.timerButton:hover svg rect {
+.timerButton:hover svg rect,
+.resetVotesBtn:hover svg rect {
   stroke-width: 4;
   stroke-dasharray: 196, 543;
   stroke-dashoffset: 437;
