@@ -17,7 +17,8 @@ const CandidateCard = ({ data }) => {
         details
       },
       parties,
-      positions
+      positions,
+      timeStarted,
     },
     dispatch
   } = useGlobalState();
@@ -103,7 +104,7 @@ const CandidateCard = ({ data }) => {
         </div>
 
         {
-          isLoggedIn &&
+          isLoggedIn && timeStarted &&
           <>
             {
               alreadyVoted ?

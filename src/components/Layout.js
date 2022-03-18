@@ -4,7 +4,7 @@ import Navigation from "./Navigation";
 import { RecaptchaVerifier } from "firebase/auth";
 import { auth } from "../config/firebase.config";
 import useGlobalState from "../store";
-import { setPartiesData, setPositionsData } from "../store/actions";
+import { setPartiesData, setPositionsData, updateTimeState } from "../store/actions";
 import { COMMON_SERVICE } from "../services/common.services";
 
 const Layout = ({ children }) => {
@@ -100,7 +100,7 @@ const Layout = ({ children }) => {
   useEffect(() => {
     if(pusher) {
       let channel = pusher.subscribe('voting');
-      channel.bind('voted_added', function(data) {
+      channel.bind("voted_added", function(data) {
         let temp = [...parties];
         temp.map((party, _) => {
           if(party._id === data.partyId) {
@@ -110,6 +110,13 @@ const Layout = ({ children }) => {
 
         dispatch(setPartiesData({
           parties: temp
+        }));
+      });
+
+      channel.bind("voting_status", function(data) {
+        dispatch(updateTimeState({
+          timeStarted: data.isVotingStarted,
+          timeCount: parseFloat(data.votingTimeLeft)
         }));
       });
     }

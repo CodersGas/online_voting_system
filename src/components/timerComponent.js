@@ -8,7 +8,10 @@ const TimerComponent = () => {
   const {
     state: {
       timeCount,
-      timeStarted
+      timeStarted,
+      user: {
+        details
+      }
     },
     dispatch
   } = useGlobalState();
@@ -41,14 +44,9 @@ const TimerComponent = () => {
   const stopTimer = async() => {
     try{
       setLoading(true);
-      // TODO:: remove this from here
-      dispatch(updateTimeState({
-        timeStarted: false,
-        timeCount: 0
-      }));
-      const responseData = await ADMIN_SERVICE.finishTimer({ "timeStarted": false });
+      const responseData = await ADMIN_SERVICE.finishTimer({ "userId": details.userId, "flag": false, "votingTimeLeft": 0 });
 
-      if(responseData.status === "success") {
+      if(responseData.success) {
         dispatch(updateTimeState({
           timeStarted: false,
           timeCount: 0
@@ -62,16 +60,19 @@ const TimerComponent = () => {
   }
 
   useEffect(() => {
-    if(seconds > 0) {
+    if(seconds >= 0) {
       intervalRef.current = setInterval(decreaseSeconds, 1000);
       setTime(secondsToTime(seconds));
       return () => clearInterval(intervalRef.current);
+    }
+    if(seconds + 1 === 0) {
+      stopTimer();
     }
   }, [seconds]);
 
   useEffect(() => {
     if(timeStarted) {
-      setSeconds(parseInt(timeCount) * 60 * 60);
+      setSeconds(parseInt(timeCount * 60 * 60));
     }
   }, [timeStarted]);
 

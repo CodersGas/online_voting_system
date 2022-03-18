@@ -98,7 +98,7 @@ export const ADMIN_SERVICE = {
   "startTimer": async(params) => {
     const configObj = {
       "method": "POST",
-      "url":  `${baseUrl}/`,
+      "url":  `${baseUrl}admin/updateVotingStatus`,
       "data": params,
       "headers": {
         "Content-Type": "application/json",
@@ -113,7 +113,7 @@ export const ADMIN_SERVICE = {
   "finishTimer": async(params) => {
     const configObj = {
       "method": "POST",
-      "url":  `${baseUrl}/`,
+      "url":  `${baseUrl}admin/updateVotingStatus`,
       "data": params,
       "headers": {
         "Content-Type": "application/json",

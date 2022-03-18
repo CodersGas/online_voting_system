@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Grid, Typography, TextField, Button, CircularProgress } from "@mui/material";
+import { Grid, Typography, TextField } from "@mui/material";
 import useGlobalState from '../store';
-import { setPartiesData } from "../store/actions";
+import { updateTimeState } from "../store/actions";
 import { ADMIN_SERVICE } from "../services/admin.services";
 
 const ValidationSchema = yup.object().shape({
@@ -21,7 +21,13 @@ const AddTimer = () => {
   });
 
   const {
-    dispatch
+    dispatch,
+    state:
+    {
+      user: {
+        details,
+      }
+    }
   } = useGlobalState();
 
   const [loading, setLoading] = useState(false);
@@ -29,18 +35,10 @@ const AddTimer = () => {
   const handleFormSubmit = async (data) => {
     try {
       setLoading(true);
-      // TODO:: remove this later
-      dispatch(setPartiesData({
-        timeStarted: true,
-        timeCount: data.time
-      }));
+      const resposneData = await ADMIN_SERVICE.startTimer({"userId": details.userId, "flag": true, "votingTimeLeft": data.time});
 
-      // TODO:: change service depending on action type
-      const resposneData = await ADMIN_SERVICE.startTimer({"timeStarted": true});
-
-      if (resposneData.status === "success") {
-        // TODO:: refetch the data. Just Call fetchData()
-        dispatch(setPartiesData({
+      if (resposneData.success) {
+        dispatch(updateTimeState({
           timeStarted: true,
           timeCount: data.time
         }));
