@@ -251,7 +251,11 @@ const Login = () => {
                 }
               </Grid>
 
-              <Box display="flex" justifyContent="flex-end" mt={3} width={1} >
+              <Box display="flex" justifyContent="space-between" mt={3} width={1} >
+                <Link to="/forgot-password" className="registerText" >
+                  Forgot Password
+                </Link>
+
                 <Link to="/register" className="registerText" >
                   Register
                 </Link>

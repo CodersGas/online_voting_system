@@ -76,7 +76,7 @@ const Layout = ({ children }) => {
   }
 
   useEffect(() => {
-    if (location.pathname === "/login" || location.pathname === "/register") {
+    if (location.pathname === "/login" || location.pathname === "/register" || location.pathname === "/forgot-password") {
       document.body.classList.add("animatedBackground");
 
       window.recaptchaVerifier = new RecaptchaVerifier("captcha-box", {

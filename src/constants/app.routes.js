@@ -12,6 +12,7 @@ import Positions from "../pages/positions";
 import Register from "../pages/register";
 import PublicHomePage from "../pages/publicHomePage";
 import ElectionResult from "../pages/result";
+import ForgotPassword from "../pages/forgotPassword";
 
 export const AppRoutes = {
   ADMIN: [
@@ -51,6 +52,11 @@ export const AppRoutes = {
       path: AUTH_ROUTES.register,
       exact: true,
       element: <Register />
+    },
+    {
+      path: AUTH_ROUTES.forgotPassword,
+      exact: true,
+      element: <ForgotPassword />
     },
   ],
   USER: [

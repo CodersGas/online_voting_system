@@ -36,7 +36,7 @@ const Navigation = () => {
 
   return (
     <>
-      <div className={(pathname === "/login" || pathname === "/register") ? 'loggedOutNavBar' : 'navigationBar'} >
+      <div className={(pathname === "/login" || pathname === "/register" || pathname === "/forgot-password") ? 'loggedOutNavBar' : 'navigationBar'} >
         {
           <div className="leftMenu" >
             {
@@ -46,7 +46,7 @@ const Navigation = () => {
             }
 
             {
-              (pathname !== "/login" && pathname !== "/register") &&
+              (pathname !== "/login" && pathname !== "/register" && pathname !== "/forgot-password") &&
               <p className='navigationTitle' >
                 Online Voting {(details && details.role) === "admin" ? "Admin Portal" : "System"}
               </p>
@@ -55,7 +55,7 @@ const Navigation = () => {
         }
 
         {
-          (pathname === "/login" || pathname === "/register") && !isLoggedIn &&
+          (pathname === "/login" || pathname === "/register" || pathname === "/forgot-password") && !isLoggedIn &&
           <div className="loggedOutLeftMenu" >
             <HomeIcon />
             <Link to="/home" >

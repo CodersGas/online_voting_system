@@ -31,5 +31,19 @@ export const AUTH_SERVICE = {
 
     data = await callAPI(configObj);
     return data;
+  },
+  "updatePassword": async(params) => {
+    const configObj = {
+      "method": "POST",
+      "url":  `${baseUrl}user/updatePassword`,
+      "data": params,
+      "headers": {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      }
+    };
+
+    data = await callAPI(configObj);
+    return data;
   }
 };

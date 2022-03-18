@@ -1,4 +1,5 @@
 export const AUTH_ROUTES = {
   "login": "/login",
-  "register": "/register"
+  "register": "/register",
+  "forgotPassword": "/forgot-password"
 };
