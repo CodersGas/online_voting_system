@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Navigation from "./Navigation";
 import { RecaptchaVerifier } from "firebase/auth";
@@ -23,6 +23,8 @@ const Layout = ({ children }) => {
 
   const location = useLocation();
 
+  const [pusher, setPusher] = useState(null);
+
   const getAllParties = async () => {
     try {
       const responseData = await COMMON_SERVICE.getParties();
@@ -31,6 +33,13 @@ const Layout = ({ children }) => {
         dispatch(setPartiesData({
           parties: [...responseData.data]
         }));
+
+        if (window.Pusher && !pusher) {
+          const pusherInit = new window.Pusher(process.env.REACT_APP_PUSHER_APP_KEY, {
+            cluster: process.env.REACT_APP_PUSHER_APP_CLUSTER
+          });
+          setPusher(pusherInit);
+        }
       }
     } catch (error) {
       console.log("error in getAllParties ", error);
@@ -51,7 +60,7 @@ const Layout = ({ children }) => {
     }
   }
 
-  const getHasAlreadyVoted = async() => {
+  const getHasAlreadyVoted = async () => {
     try {
       const responseData = await COMMON_SERVICE.getHasAlreadyVoted({ "userId": details.userId });
 
@@ -62,7 +71,7 @@ const Layout = ({ children }) => {
       }
     } catch (error) {
       console.log("error in getHasAlreadyVoted ", error);
-    } 
+    }
   }
 
   useEffect(() => {
@@ -72,28 +81,46 @@ const Layout = ({ children }) => {
       window.recaptchaVerifier = new RecaptchaVerifier("captcha-box", {
         "size": "invisible"
       }, auth);
-    }else {
+    } else {
       document.body.classList.remove("animatedBackground");
     }
 
-    if(isLoggedIn && details.role === "user") {
-      getHasAlreadyVoted(); 
+    if (isLoggedIn && details.role === "user") {
+      getHasAlreadyVoted();
     }
   }, [location]);
 
   useEffect(() => {
-    if(!parties.length && !positions.length) {
+    if (!parties.length && !positions.length) {
       getAllParties();
       getAllPositions();
     }
   }, []);
+
+  useEffect(() => {
+    if(pusher) {
+      let channel = pusher.subscribe('voting');
+      channel.bind('voted_added', function(data) {
+        let temp = [...parties];
+        temp.map((party, _) => {
+          if(party._id === data.partyId) {
+            party.votes = party.votes + 1;
+          }
+        });
+
+        dispatch(setPartiesData({
+          parties: temp
+        }));
+      });
+    }
+  }, [pusher]);
 
   return (
     <div className="layoutDiv" >
       {
         <Navigation />
       }
-      { children }
+      {children}
 
       <div id="captcha-box" ></div>
     </div>

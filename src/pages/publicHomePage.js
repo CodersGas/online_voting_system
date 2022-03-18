@@ -11,10 +11,13 @@ import Loader from "../components/loader";
 const PublicHomePage = () => {
   const {
     state: {
-      candidates
+      candidates,
+      parties
     },
     dispatch
   } = useGlobalState();
+
+  console.log('parties ', parties);
 
   const [loading, setLoading] = useState(false);
 
@@ -43,7 +46,18 @@ const PublicHomePage = () => {
   return (
     <Layout>
       <div className="bootstrapContainer" >
-        <Box my={5} >
+        <Box mb={3} >
+          <div className="voteCountDiv" >
+            {
+              parties.map((party, _) => (
+                <div className="eachPartyDiv" key={party._id} >
+                  <p className="partyName" >{party.name}</p>
+                  <p className="partyVotes" >{party.votes}</p>
+                </div>
+              ))
+            }
+          </div>
+
           <Grid container spacing={2} >
             {
               loading ?
