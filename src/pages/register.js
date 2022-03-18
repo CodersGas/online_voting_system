@@ -261,7 +261,7 @@ const Register = () => {
 
               <Box display="flex" justifyContent="flex-end" mt={3} width={1} >
                 <Link to="/login" className="registerText" >
-                  Alreday have an account ? Login
+                  Already have an account ? Login
                 </Link>
               </Box>
             </Grid>
