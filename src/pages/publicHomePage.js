@@ -12,12 +12,11 @@ const PublicHomePage = () => {
   const {
     state: {
       candidates,
-      parties
+      parties,
+      timeStarted
     },
     dispatch
   } = useGlobalState();
-
-  console.log('parties ', parties);
 
   const [loading, setLoading] = useState(false);
 
@@ -46,7 +45,15 @@ const PublicHomePage = () => {
   return (
     <Layout>
       <div className="bootstrapContainer" >
-        <Box mb={3} >
+        <Box mb={3} textAlign="center" >
+          <p className="electionStatusText" >
+            {
+              timeStarted ?
+                "Elections has started"
+                :
+                "Elections will start soon"
+            }
+          </p>
           <div className="voteCountDiv" >
             {
               parties.map((party, _) => (
@@ -61,11 +68,11 @@ const PublicHomePage = () => {
           <Grid container spacing={2} >
             {
               loading ?
-              <Loader />
-              :
-              candidates.map((data, index) => (
-                <CandidateCard key={index} data={data} />
-              ))
+                <Loader />
+                :
+                candidates.map((data, index) => (
+                  <CandidateCard key={index} data={data} />
+                ))
             }
           </Grid>
         </Box>

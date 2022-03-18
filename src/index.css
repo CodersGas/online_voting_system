@@ -469,6 +469,10 @@ a {
   font-size: 1.5rem;
   font-weight: 600;
 }
+.electionStatusText {
+  padding: 1rem 0;
+  font-size: 1.2rem;
+}
 
 .bootstrapContainer {
   margin: 0 auto;
