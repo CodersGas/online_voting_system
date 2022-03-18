@@ -38,18 +38,20 @@ const Navigation = () => {
     <>
       <div className={(pathname === "/login" || pathname === "/register") ? 'loggedOutNavBar' : 'navigationBar'} >
         {
-          isLoggedIn ?
-            <div className="leftMenu" >
-              {
-                details.role === "admin" &&
-                <MenuIcon className="menuIcon" onClick={toggleNavDrawer} />
-              }
+          <div className="leftMenu" >
+            {
+              isLoggedIn &&
+              details.role === "admin" &&
+              <MenuIcon className="menuIcon" onClick={toggleNavDrawer} />
+            }
+
+            {
+              (pathname !== "/login" && pathname !== "/register") &&
               <p className='navigationTitle' >
-                Online Voting {details.role === "admin" ? "Admin Portal" : "System"}
+                Online Voting {(details && details.role) === "admin" ? "Admin Portal" : "System"}
               </p>
-            </div>
-            :
-            <div></div>
+            }
+          </div>
         }
 
         {
