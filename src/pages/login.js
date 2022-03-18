@@ -17,6 +17,10 @@ import Layout from "../components/Layout";
 import { signInWithPhoneNumber } from "firebase/auth";
 import { auth } from "../config/firebase.config";
 import { toast } from "react-toastify";
+import IconButton from "@mui/material/IconButton";
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import InputAdornment from "@mui/material/InputAdornment";
 
 const ValidationSchema = yup.object().shape({
   email: yup.string().email("Please enter valid email").required("Please enter email"),
@@ -39,8 +43,6 @@ const Login = () => {
       timeStarted
     }
   } = useGlobalState();
-  console.log('user ', user);
-  console.log('timeStarted ', timeStarted)
 
   const {
     control,
@@ -57,6 +59,9 @@ const Login = () => {
   const [otpSent, setOtpSent] = useState(false);
   const [loginFormData, setLoginFormData] = useState(null);
   const [confirmationPhoneResult, setConfirmationPhoneResult] = useState(null);
+  const [visible, setVisible] = useState(false);
+
+  const handlePasswordVisible = () => setVisible(!visible);
 
   const handleFormSubmit = async (data) => {
     try {
@@ -182,7 +187,17 @@ const Login = () => {
                       helperText={error?.message}
                       placeholder="enter password"
                       inputProps={{
-                        type: "password"
+                        type: visible ? "text" : "password"
+                      }}
+                      InputProps={{
+                        endAdornment: 
+                        <InputAdornment position="end" >
+                          <IconButton onClick={handlePasswordVisible} >
+                            {
+                              visible ? <VisibilityOffIcon style={{color: "#fff"}} /> : <VisibilityIcon style={{color: "#fff"}} />
+                            }
+                          </IconButton>
+                        </InputAdornment>
                       }}
                     />
                   )}

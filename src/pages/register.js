@@ -15,6 +15,10 @@ import { signInWithPhoneNumber } from "firebase/auth";
 import { auth } from "../config/firebase.config";
 import { toast } from "react-toastify";
 import useGlobalState from "../store";
+import IconButton from "@mui/material/IconButton";
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import InputAdornment from "@mui/material/InputAdornment";
 
 const ValidationSchema = yup.object().shape({
   name: yup.string().required("Please enter your name"),
@@ -51,6 +55,9 @@ const Register = () => {
   const [registerFormData, setRegisterFormData] = useState(null);
   const [confirmationPhoneResult, setConfirmationPhoneResult] = useState(null);
   const [otpSent, setOtpSent] = useState(false);
+  const [visible, setVisible] = useState(false);
+
+  const handlePasswordVisible = () => setVisible(!visible);
 
   const handleFormSubmit = async (data) => {
     try {
@@ -212,7 +219,17 @@ const Register = () => {
                       helperText={error?.message}
                       placeholder="enter password"
                       inputProps={{
-                        type: "password"
+                        type: visible ? "text" : "password"
+                      }}
+                      InputProps={{
+                        endAdornment: 
+                        <InputAdornment position="end" >
+                          <IconButton onClick={handlePasswordVisible} >
+                            {
+                              visible ? <VisibilityOffIcon style={{color: "#fff"}} /> : <VisibilityIcon style={{color: "#fff"}} />
+                            }
+                          </IconButton>
+                        </InputAdornment>
                       }}
                     />
                   )}

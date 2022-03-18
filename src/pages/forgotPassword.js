@@ -11,6 +11,10 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { Link, useNavigate } from "react-router-dom";
 import Layout from "../components/Layout";
 import { toast } from "react-toastify";
+import IconButton from "@mui/material/IconButton";
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import InputAdornment from "@mui/material/InputAdornment";
 
 const ValidationSchema = yup.object().shape({
   email: yup.string().email("Please enter valid email").required("Please enter email"),
@@ -28,6 +32,9 @@ const ForgotPassword = () => {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
+  const [visible, setVisible] = useState(false);
+
+  const handlePasswordVisible = () => setVisible(!visible);
 
   const handleFormSubmit = async (data) => {
     try {
@@ -99,7 +106,17 @@ const ForgotPassword = () => {
                       helperText={error?.message}
                       placeholder="enter password"
                       inputProps={{
-                        type: "password"
+                        type: visible ? "text" : "password"
+                      }}
+                      InputProps={{
+                        endAdornment: 
+                        <InputAdornment position="end" >
+                          <IconButton onClick={handlePasswordVisible} >
+                            {
+                              visible ? <VisibilityOffIcon style={{color: "#fff"}} /> : <VisibilityIcon style={{color: "#fff"}} />
+                            }
+                          </IconButton>
+                        </InputAdornment>
                       }}
                     />
                   )}
